@@ -1,11 +1,10 @@
-import './module'
-import './styles/index.scss'
+import './module';
+import './styles/index.scss';
 
-console.log('app');
+console.log('apdrfgdrfp');
 
-
-async function start(){
-    await Promise.resolve();
+async function start() {
+  await Promise.resolve();
 }
 
-start()
+start();
