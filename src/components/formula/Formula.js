@@ -1,5 +1,7 @@
 const {ExcelComponent} = require('../../core/ExcelComponent');
 
 export class Formula extends ExcelComponent {
-
+  toHTML() {
+    return '<h1>formula</h1>';
+  }
 }
