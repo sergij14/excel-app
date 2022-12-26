@@ -9,5 +9,4 @@ const excelApp = new Excel('#app', {
   components: [Header, Toolbar, Formula, Table],
 });
 
-
-console.log(excelApp.render());
+excelApp.render();
