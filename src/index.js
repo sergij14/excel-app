@@ -1,10 +1,6 @@
-import './module';
+import {Excel} from './components/excel/Excel';
 import './styles/index.css';
 
-console.log('apdrfgdrfp');
-
-async function start() {
-  await Promise.resolve();
-}
-
-start();
+const excelApp = new Excel('#app', {
+  components: [],
+});
