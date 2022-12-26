@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Excel App</title>
+  </head>
+  <body>
+    <div id="app" class="p-4 max-w-6xl mx-auto">
+      <div class="border-2 border-gray-300">
+        <!-- header start -->
+        <div class="flex justify-between p-2 border-b-2 border-gray-300">
+          <input
+            type="text"
+            value="New table"
+            class="focus:outline-none"
+          />
+          <div class="flex gap-2">
+            <button
+              class="hover:text-blue-500 rounded-md bg-gray-200 px-2 py-1 cursor-pointer"
+            >
+              <i class="fa-sharp fa-solid fa-trash"></i>
+            </button>
+            <button
+              class="hover:text-blue-500 rounded-md bg-gray-200 px-2 py-1 cursor-pointer"
+            >
+              <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        </div>
+        <!-- header end -->
+
+        <!-- tollbar start -->
+        <div class="flex gap-2 p-2 border-b-2 border-gray-300">
+          <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
+            <i class="fa-solid fa-align-left"></i>
+          </button>
+          <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
+            <i class="fa-solid fa-align-center"></i>
+          </button>
+          <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
+            <i class="fa-solid fa-align-right"></i>
+          </button>
+          <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
+            <i class="fa-solid fa-bold"></i>
+          </button>
+          <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
+            <i class="fa-solid fa-italic"></i>
+          </button>
+          <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
+            <i class="fa-solid fa-underline"></i>
+          </button>
+        </div>
+        <!-- tollbar end -->
+
+        <!-- formula start -->
+        <div class="flex border-b-2 border-gray-300">
+          <div class="flex w-[80px] border-r-2 border-gray-200">fx</div>
+          <div class="flex-grow">
+            <input class="w-full focus:outline-none" type="text" />
+          </div>
+        </div>
+        <!-- formula end -->
+
+        <!-- table start -->
+        <div class="overflow-x-auto">
+          <div class="flex border-b-2 border-gray-300">
+            <div class="flex w-[80px] border-r-2 border-gray-200"></div>
+            <div class="flex">
+              <div
+                class="border-r-2 border-gray-200 bg-gray-100 w-[180px] flex justify-center"
+              >
+                a
+              </div>
+              <div
+                class="border-r-2 border-gray-200 bg-gray-100 w-[180px] flex justify-center"
+              >
+                b
+              </div>
+              <div
+                class="border-r-2 border-gray-200 bg-gray-100 w-[180px] flex justify-center"
+              >
+                c
+              </div>
+            </div>
+          </div>
+          <div class="flex border-b-2 border-gray-300">
+            <div class="flex w-[80px] border-gray-200 bg-gray-100">1</div>
+            <div class="flex">
+              <div
+                class="border-r-2 border-gray-200 w-[180px] flex justify-center"
+              >
+                a data
+              </div>
+              <div
+                class="border-r-2 border-gray-200 w-[180px] flex justify-center"
+              >
+                b data
+              </div>
+              <div
+                class="border-r-2 border-gray-200 w-[180px] flex justify-center"
+              >
+                c data
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
