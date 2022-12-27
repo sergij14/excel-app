@@ -3,6 +3,7 @@ export class TableSelection {
 
     constructor() {
       this.group = [];
+      this.current = null;
     }
 
     select($el) {
@@ -10,10 +11,14 @@ export class TableSelection {
       this.group = [];
       this.group.push($el);
       $el.classList.add(TableSelection.className);
+
+      $el.focus();
+      this.current = $el;
     }
 
     clear() {
       this.group.forEach((el) => el.classList.remove(TableSelection.className));
+      this.current = null;
     }
 
     selectGroup($el) {
