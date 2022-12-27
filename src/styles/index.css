@@ -19,3 +19,9 @@
     @apply overflow-x-auto;
   }
 }
+
+@layer utilities {
+  .centered-cell {
+    @apply flex justify-center;
+  }
+}
