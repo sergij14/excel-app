@@ -3,10 +3,13 @@ const CHAR_CODES = {
   Z: 90,
 };
 
-function toCell() {
-  return `
-    <div class="w-[80px] flex justify-center border-b border-r" contenteditable>
-        
+function toCell(row) {
+  return (_, col) => `
+    <div class="w-[80px] flex justify-center border-b border-r focus-visible:selected-cell"
+        contenteditable
+        data-id="${row}:${col}"
+        data-type="cell"
+    >
     </div>
     `;
 }
@@ -42,9 +45,9 @@ export function createTable(rowsCount = 7) {
 
   rows.push(createRow('A-Z', cols));
 
-  for (let i = 0; i < rowsCount; i++) {
-    const cells = new Array(colsCount).fill('').map(toCell).join('');
-    rows.push(createRow(i + 1, cells));
+  for (let row = 0; row < rowsCount; row++) {
+    const cells = new Array(colsCount).fill('').map(toCell(row)).join('');
+    rows.push(createRow(row + 1, cells));
   }
 
   return rows.join('');
