@@ -29,7 +29,11 @@ export class Table extends ExcelComponent {
 
     onMousedown(evt) {
       if (evt.target.dataset.type == 'cell') {
-        this.selection.select(evt.target);
+        if (evt.shiftKey) {
+          this.selection.selectGroup(evt.target);
+        } else {
+          this.selection.select(evt.target);
+        }
       }
     }
 }
