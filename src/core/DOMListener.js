@@ -1,5 +1,3 @@
-import {capitalize} from './utils';
-
 export class DOMListener {
   constructor($root, listeners = []) {
     if (!$root) {
@@ -32,4 +30,12 @@ export class DOMListener {
 
 function getMethodName(evtName) {
   return 'on' + capitalize(evtName);
+}
+
+function capitalize(string) {
+  if (typeof string === 'string') {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  return '';
 }
