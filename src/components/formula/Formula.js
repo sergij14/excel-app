@@ -1,4 +1,3 @@
-import {FIRST_CELL_WIDTH} from '../table/constants';
 
 const {ExcelComponent} = require('../../core/ExcelComponent');
 
@@ -14,7 +13,7 @@ export class Formula extends ExcelComponent {
 
     toHTML() {
       return `
-      <div class="w-[${FIRST_CELL_WIDTH}px] bg-gray-100 border-r centered-cell">fx</div>
+      <div class="w-[60px] bg-gray-100 border-r centered-cell">fx</div>
       <div class="flex-grow">
         <input class="w-full focus:outline-none" type="text" />
       </div>

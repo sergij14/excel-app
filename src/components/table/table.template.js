@@ -1,8 +1,11 @@
-import {CHAR_CODES, CELL_WIDTH, FIRST_CELL_WIDTH} from './constants';
+const CHAR_CODES = {
+  A: 65,
+  Z: 90,
+};
 
 function toCell() {
   return `
-    <div class="w-[${CELL_WIDTH}px] flex justify-center border-b border-r" contenteditable>
+    <div class="w-[80px] flex justify-center border-b border-r" contenteditable>
         
     </div>
     `;
@@ -10,7 +13,7 @@ function toCell() {
 
 function toCol(col = '') {
   return `
-    <div class="bg-gray-100 w-[${CELL_WIDTH}px] border-b border-r centered-cell">
+    <div class="bg-gray-100 w-[80px] border-b border-r centered-cell">
         ${col}
     </div>
  `;
@@ -19,7 +22,7 @@ function toCol(col = '') {
 function createRow(idx, content = '') {
   return `
     <div class="inline-flex">
-        <div class="w-[${FIRST_CELL_WIDTH}px] bg-gray-100 border-b border-r centered-cell">${idx}</div>
+        <div class="w-[60px] bg-gray-100 border-b border-r centered-cell">${idx}</div>
         <div class="flex">
             ${content}
         </div>
@@ -32,7 +35,7 @@ function toChar(_, idx) {
 }
 
 export function createTable(rowsCount = 7) {
-  const colsCount = 14;
+  const colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1;
   const rows = [];
 
   const cols = new Array(colsCount).fill('').map(toChar).map(toCol).join('');
