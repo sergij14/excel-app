@@ -5,18 +5,19 @@ const CHAR_CODES = {
 
 function toCell(row) {
   return (_, col) => `
-    <div class="w-[80px] flex justify-center border-b border-r focus-visible:selected-cell"
-        contenteditable
+    <textarea
+        class="w-[80px] min-h-[50px] max-h-[220px]
+        overflow-hidden border-t-transparent border-l-transparent
+        border focus:selected-cell"
         data-id="${row}:${col}"
         data-type="cell"
-    >
-    </div>
+    ></textarea>
     `;
 }
 
 function toCol(col = '') {
   return `
-    <div class="bg-gray-100 w-[80px] border-b border-r centered-cell">
+    <div class="bg-gray-100 w-[80px] h-[50px] border-b border-r centered-cell">
         ${col}
     </div>
  `;
@@ -25,7 +26,7 @@ function toCol(col = '') {
 function createRow(idx, content = '') {
   return `
     <div class="inline-flex">
-        <div class="w-[60px] bg-gray-100 border-b border-r centered-cell">${idx}</div>
+        <div class="w-[60px] h-[50px] bg-gray-100 border-b border-r centered-cell">${idx}</div>
         <div class="flex">
             ${content}
         </div>

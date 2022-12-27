@@ -22,9 +22,9 @@
 
 @layer utilities {
   .centered-cell {
-    @apply flex justify-center;
+    @apply flex justify-center items-center;
   }
   .selected-cell {
-    @apply outline-none ring-1 ring-blue-500;
+    @apply outline-none border border-blue-500;
   }
 }
