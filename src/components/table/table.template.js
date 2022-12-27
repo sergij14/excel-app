@@ -26,7 +26,7 @@ function toCol(col = '') {
 function createRow(idx, content = '') {
   return `
     <div class="inline-flex">
-        <div class="w-[60px] h-[50px] bg-gray-100 border-b border-r centered-cell">${idx}</div>
+        <div class="w-[60px] min-h-[50px] max-h-[220px] bg-gray-100 border-b border-r centered-cell flex-grow">${idx}</div>
         <div class="flex">
             ${content}
         </div>
