@@ -1,3 +1,5 @@
+import {$} from '../../core/dom';
+
 export class TableSelection {
     static className = 'selected-cell'
 
@@ -10,19 +12,19 @@ export class TableSelection {
       this.clear();
       this.group = [];
       this.group.push($el);
-      $el.classList.add(TableSelection.className);
+      $.classList($el).add(TableSelection.className);
 
       $el.focus();
       this.current = $el;
     }
 
     clear() {
-      this.group.forEach((el) => el.classList.remove(TableSelection.className));
+      this.group.forEach((el) => $.classList(el).remove(TableSelection.className));
       this.current = null;
     }
 
     selectGroup($el) {
       this.group.push($el);
-      $el.classList.add(TableSelection.className);
+      $.classList($el).add(TableSelection.className);
     }
 }

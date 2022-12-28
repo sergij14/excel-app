@@ -1,3 +1,4 @@
+import {$} from '../../core/dom';
 import {createTable} from './table.template';
 import {TableSelection} from './TableSelection';
 
@@ -24,7 +25,7 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init();
-    const $cell = this.$root.querySelector('[data-id="0:0"]');
+    const $cell = $.find(this.$root, '[data-id="0:0"]');
     this.selection.select($cell);
 
     this.$on('formula:input', (text) => {
@@ -58,7 +59,7 @@ export class Table extends ExcelComponent {
       evt.preventDefault();
 
       const [row, col] = this.selection.current.dataset.id.split(':');
-      const $next = this.$root.querySelector(findNextEl(key, {row, col}));
+      const $next = $.find(this.$root, findNextEl(key, {row, col}));
       this.selection.select($next);
     }
   }
