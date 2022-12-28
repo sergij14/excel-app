@@ -5,6 +5,7 @@ export class Excel {
   constructor(selector, config) {
     this.$el = $.find(document, selector);
     this.components = config.components;
+    this.store = config.store;
     this.emitter = new Emitter();
   }
 
