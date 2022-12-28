@@ -23,6 +23,6 @@ export class Formula extends ExcelComponent {
 
     onInput(evt) {
       const {value} = evt.target;
-      this.emitter.emit('input', value);
+      this.$emit('formula:input', value);
     }
 }
