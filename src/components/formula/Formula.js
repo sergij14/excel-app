@@ -1,3 +1,4 @@
+import {$} from '../../core/dom';
 
 const {ExcelComponent} = require('../../core/ExcelComponent');
 
@@ -7,7 +8,7 @@ export class Formula extends ExcelComponent {
     constructor($root, config) {
       super($root, {
         name: 'Formula',
-        listeners: ['input'],
+        listeners: ['input', 'keydown'],
         ...config,
       });
     }
@@ -21,8 +22,32 @@ export class Formula extends ExcelComponent {
       `;
     }
 
+    init() {
+      super.init();
+
+      this.$formula = $.find(this.$root, 'input');
+
+      this.$on('table:select', ($cell) => {
+        this.$formula.value = $.text($cell);
+      });
+
+
+      this.$on('table:input', ($cell) => {
+        this.$formula.value = $.text($cell);
+      });
+    }
+
     onInput(evt) {
       const {value} = evt.target;
       this.$emit('formula:input', value);
+    }
+
+    onKeydown(evt) {
+      const keys = ['Enter', 'Tab'];
+      if (keys.includes(evt.key)) {
+        evt.preventDefault();
+
+        this.$emit('formula:done');
+      }
     }
 }

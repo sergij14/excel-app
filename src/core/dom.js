@@ -21,10 +21,21 @@ function classList(node) {
   };
 }
 
+function text(root, txt) {
+  if (typeof txt === 'string') {
+    return root.textContent = txt;
+  }
+  if (root.tagName.toLowerCase() === 'input') {
+    return root.value;
+  }
+  return root.textContent;
+}
+
 export const $ = {
   find,
   create,
   html,
   append,
   classList,
+  text,
 };

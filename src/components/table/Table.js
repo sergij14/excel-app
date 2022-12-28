@@ -10,7 +10,7 @@ export class Table extends ExcelComponent {
   constructor($root, config) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown'],
+      listeners: ['mousedown', 'keydown', 'input'],
       ...config,
     });
   }
@@ -26,21 +26,26 @@ export class Table extends ExcelComponent {
   init() {
     super.init();
     const $cell = $.find(this.$root, '[data-id="0:0"]');
-    this.selection.select($cell);
+    this.selectCell($cell);
 
     this.$on('formula:input', (text) => {
-      this.selection.current.textContent = text;
+      $.text(this.selection.current, text);
+    });
+
+    this.$on('formula:done', () => {
+      this.selection.current.focus();
     });
   }
 
   onMousedown(evt) {
     if (evt.target.dataset.type == 'cell') {
-      if (evt.shiftKey) {
-        this.selection.selectGroup(evt.target);
-      } else {
-        this.selection.select(evt.target);
-      }
+      this.selectCell(evt.target);
     }
+  }
+
+  selectCell($cell) {
+    this.selection.select($cell);
+    this.$emit('table:select', $cell);
   }
 
   onKeydown(evt) {
@@ -60,7 +65,13 @@ export class Table extends ExcelComponent {
 
       const [row, col] = this.selection.current.dataset.id.split(':');
       const $next = $.find(this.$root, findNextEl(key, {row, col}));
-      this.selection.select($next);
+      this.selectCell($next);
+    }
+  }
+
+  onInput(evt) {
+    if (evt.target.dataset.type === 'cell') {
+      this.$emit('table:input', evt.target);
     }
   }
 }

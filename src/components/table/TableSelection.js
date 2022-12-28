@@ -22,9 +22,4 @@ export class TableSelection {
       this.group.forEach((el) => $.classList(el).remove(TableSelection.className));
       this.current = null;
     }
-
-    selectGroup($el) {
-      this.group.push($el);
-      $.classList($el).add(TableSelection.className);
-    }
 }
