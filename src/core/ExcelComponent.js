@@ -4,8 +4,10 @@ export class ExcelComponent extends DOMListener {
   constructor($root, config = {}) {
     super($root, config.listeners);
     this.name = config.name;
+    this.emitter = config.emitter;
     this.prepare();
   }
+
   toHTML() {
     return '';
   }

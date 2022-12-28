@@ -2,6 +2,14 @@ const {ExcelComponent} = require('../../core/ExcelComponent');
 
 export class Header extends ExcelComponent {
     static className = 'excel-header'
+
+    constructor($root, config) {
+      super($root, {
+        name: 'Header',
+        ...config,
+      });
+    }
+
     toHTML() {
       return `
       <input

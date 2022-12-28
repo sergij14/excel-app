@@ -2,6 +2,15 @@ const {ExcelComponent} = require('../../core/ExcelComponent');
 
 export class Toolbar extends ExcelComponent {
     static className = 'excel-toolbar'
+
+
+    constructor($root, config) {
+      super($root, {
+        name: 'Toolbar',
+        ...config,
+      });
+    }
+
     toHTML() {
       return `
       <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">

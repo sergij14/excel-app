@@ -6,10 +6,11 @@ const {ExcelComponent} = require('../../core/ExcelComponent');
 export class Table extends ExcelComponent {
   static className = 'excel-table';
 
-  constructor($root) {
+  constructor($root, config) {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'keydown'],
+      ...config,
     });
   }
 
@@ -25,6 +26,10 @@ export class Table extends ExcelComponent {
     super.init();
     const $cell = this.$root.querySelector('[data-id="0:0"]');
     this.selection.select($cell);
+
+    this.emitter.subscribe('input', (text) => {
+      this.selection.current.textContent = text;
+    });
   }
 
   onMousedown(evt) {

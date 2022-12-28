@@ -4,10 +4,11 @@ const {ExcelComponent} = require('../../core/ExcelComponent');
 export class Formula extends ExcelComponent {
     static className = 'excel-formula'
 
-    constructor($root) {
+    constructor($root, config) {
       super($root, {
         name: 'Formula',
         listeners: ['input'],
+        ...config,
       });
     }
 
@@ -20,7 +21,8 @@ export class Formula extends ExcelComponent {
       `;
     }
 
-    onInput() {
-      console.log('onInput, formula');
+    onInput(evt) {
+      const {value} = evt.target;
+      this.emitter.emit('input', value);
     }
 }
