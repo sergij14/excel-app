@@ -27,4 +27,7 @@
   .selected-cell {
     @apply outline-none border border-blue-500;
   }
+  .clicked-clear-btn {
+    @apply text-red-500 hover:text-red-700 !important;
+  }
 }

@@ -17,6 +17,15 @@ export function storage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
+export function doAsyncTask(cb, delay = 1000) {
+  return new Promise((resolve, reject) => {
+    cb();
+    setTimeout(() => {
+      resolve();
+    }, delay);
+  });
+}
+
 export function toInlineStyles(styleObj = {}) {
   return Object.keys(styleObj)
       .map(

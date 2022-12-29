@@ -1,6 +1,6 @@
 import {storage} from '../core/utils';
 
-const defaultState = {
+export const defaultState = {
   currentValue: '',
   dataState: {},
   dataStyle: {},

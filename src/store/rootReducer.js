@@ -1,4 +1,5 @@
-import {CHANGE_STYLE, CHANGE_TABLE_TITLE, CHANGE_VALUE, DELETE_VALUE} from './types';
+import {defaultState} from './initialState';
+import {CHANGE_STYLE, CHANGE_TABLE_TITLE, CHANGE_VALUE, CLEAR_TABLE, DELETE_VALUE} from './types';
 
 export function rootReducer(state, action) {
   let prevState;
@@ -35,6 +36,10 @@ export function rootReducer(state, action) {
 
     case CHANGE_TABLE_TITLE:
       return {...state, title: data};
+
+    case CLEAR_TABLE:
+      localStorage.setItem('excel-state', null);
+      return {...defaultState};
 
     default:
       return state;

@@ -1,4 +1,4 @@
-import {CHANGE_STYLE, CHANGE_TABLE_TITLE, CHANGE_VALUE, DELETE_VALUE} from './types';
+import {CHANGE_STYLE, CHANGE_TABLE_TITLE, CHANGE_VALUE, CLEAR_TABLE, DELETE_VALUE} from './types';
 
 function changeValue(data) {
   const isDataEmpty = data.value === '';
@@ -23,8 +23,16 @@ function changeTitle(data) {
   };
 }
 
+function clearTable() {
+  return {
+    type: CLEAR_TABLE,
+  };
+}
+
+
 export const actions = {
   changeValue,
   changeStyle,
+  clearTable,
   changeTitle,
 };
