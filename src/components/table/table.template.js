@@ -50,7 +50,7 @@ function toChar(_, idx) {
   return String.fromCharCode(CHAR_CODES.A + idx);
 }
 
-export function createTable(rowsCount = 7, colsCount, state = {}) {
+export function createTable(rowsCount, colsCount, state = {}) {
   const rows = [];
 
   const cols = new Array(colsCount).fill('').map(toChar).map(toCol).join('');
