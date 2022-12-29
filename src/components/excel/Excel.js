@@ -15,6 +15,7 @@ export class Excel {
 
     const componentConfig = {
       emitter: this.emitter,
+      store: this.store,
     };
 
     this.components = this.components.map((Component) => {

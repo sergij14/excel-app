@@ -7,7 +7,7 @@ import {Toolbar} from './components/toolbar/Toolbar';
 import {createStore} from './core/createStore';
 import {rootReducer} from './store/rootReducer';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, {name: 'table name'});
 
 const excelApp = new Excel('#app', {
   components: [Header, Toolbar, Formula, Table],
