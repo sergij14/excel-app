@@ -1,4 +1,4 @@
-import {toInlineStyles} from '../../core/utils';
+import {parse, toInlineStyles} from '../../core/utils';
 
 const CHAR_CODES = {
   A: 65,
@@ -8,8 +8,8 @@ const CHAR_CODES = {
 function toCell(state, row) {
   return (_, col) => {
     const id = `${row}:${col}`;
-    const value = state['dataState'][id];
-    const styles = state['dataStyle'][id];
+    const value = state.dataState[id] || '';
+    const styles = state.dataStyle[id];
     return `
       <div
           class="w-[80px]
@@ -17,10 +17,11 @@ function toCell(state, row) {
           border focus:visible:selected-cell focus:selected-cell"
           data-id="${row}:${col}"
           data-type="cell"
+          data-value="${value}"
           style="${toInlineStyles(styles)}"
           contenteditable
       >
-        ${value || ''}
+        ${parse(value)}
       </div>
       `;
   };

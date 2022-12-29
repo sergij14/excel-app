@@ -28,9 +28,8 @@ export class Formula extends ExcelComponent {
       this.$formula = $.find(this.$root, 'input');
 
       this.$on('table:select', ($cell) => {
-        this.$formula.value = $.text($cell);
+        this.$formula.value = $.attr($cell, {name: 'data-value'}) || $.text($cell);
       });
-
 
       this.$on('table:input', ($cell) => {
         this.$formula.value = $.text($cell);

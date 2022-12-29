@@ -28,13 +28,20 @@ function css(node, styles={}) {
 }
 
 function text(root, txt) {
-  if (typeof txt === 'string') {
-    return root.textContent = txt.trim();
+  if (typeof txt !== 'undefined') {
+    return root.textContent = txt;
   }
   if (root.tagName.toLowerCase() === 'input') {
     return root.value.trim();
   }
   return root.textContent.trim();
+}
+
+function attr(node, {name, value}) {
+  if (value) {
+    return node.setAttribute(name, value);
+  }
+  return node.getAttribute(name);
 }
 
 export const $ = {
@@ -45,4 +52,5 @@ export const $ = {
   classList,
   text,
   css,
+  attr,
 };

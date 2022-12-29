@@ -1,4 +1,5 @@
 import {$} from '../../core/dom';
+import {parse} from '../../core/utils';
 import {actions} from '../../store/actions';
 import {createTable} from './table.template';
 import {TableSelection} from './TableSelection';
@@ -29,9 +30,11 @@ export class Table extends ExcelComponent {
     const $cell = $.find(this.$root, '[data-id="0:0"]');
     this.selectCell($cell);
 
-    this.$on('formula:input', (text) => {
-      $.text(this.selection.current, text);
-      this.updateValueInStore(text);
+    this.$on('formula:input', (value) => {
+      $.attr(this.selection.current, {name: 'data-value', value});
+      $.text(this.selection.current, parse(value));
+
+      this.updateValueInStore(value);
     });
 
     this.$on('formula:done', () => {
