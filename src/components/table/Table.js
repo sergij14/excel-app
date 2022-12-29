@@ -71,7 +71,7 @@ export class Table extends ExcelComponent {
       'ArrowUp',
     ];
 
-    if (keys.includes(key) && !evt.shiftKey) {
+    if (keys.includes(key)) {
       evt.preventDefault();
 
       const {id} = this.selection.current.dataset;
