@@ -3,7 +3,7 @@ const CHAR_CODES = {
   Z: 90,
 };
 
-function toCell(row) {
+function toCell(state, row) {
   return (_, col) => `
     <div
         class="w-[80px]
@@ -39,7 +39,7 @@ function toChar(_, idx) {
   return String.fromCharCode(CHAR_CODES.A + idx);
 }
 
-export function createTable(rowsCount = 7) {
+export function createTable(rowsCount = 7, state = {}) {
   const colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1;
   const rows = [];
 
@@ -48,7 +48,7 @@ export function createTable(rowsCount = 7) {
   rows.push(createRow('A-Z', cols));
 
   for (let row = 0; row < rowsCount; row++) {
-    const cells = new Array(colsCount).fill('').map(toCell(row)).join('');
+    const cells = new Array(colsCount).fill('').map(toCell(state, row)).join('');
     rows.push(createRow(row + 1, cells));
   }
 

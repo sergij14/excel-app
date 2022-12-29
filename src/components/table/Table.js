@@ -1,4 +1,5 @@
 import {$} from '../../core/dom';
+import {actions} from '../../store/actions';
 import {createTable} from './table.template';
 import {TableSelection} from './TableSelection';
 
@@ -16,7 +17,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable();
+    return createTable(20, this.store.getState());
   }
 
   prepare() {
@@ -30,6 +31,7 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', (text) => {
       $.text(this.selection.current, text);
+      this.updateValueInStore(text);
     });
 
     this.$on('formula:done', () => {
@@ -48,7 +50,6 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
-    this.$dispatch({type: 'test'});
   }
 
   onKeydown(evt) {
@@ -73,9 +74,19 @@ export class Table extends ExcelComponent {
   }
 
   onInput(evt) {
-    if (evt.target.dataset.type === 'cell') {
-      this.$emit('table:input', evt.target);
-    }
+    // if (evt.target.dataset.type === 'cell') {
+    //   this.$emit('table:input', evt.target);
+    // }
+    this.updateValueInStore($.text(evt.target));
+  }
+
+  updateValueInStore(value) {
+    this.$dispatch(
+        actions.changeValue({
+          value,
+          id: this.selection.current.dataset.id,
+        })
+    );
   }
 }
 
