@@ -2,11 +2,13 @@ import {$} from '../../core/dom';
 import {ExcelComponent} from '../../core/ExcelComponent';
 import {parse} from '../../core/utils';
 import {actions} from '../../store/actions';
-import {createTable} from './table.template';
+import {CHAR_CODES, createTable} from './table.template';
 import {TableSelection} from './TableSelection';
 
 export class Table extends ExcelComponent {
   static className = 'excel-table';
+  static colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1;
+  static rowsCount = 20;
 
   constructor($root, config) {
     super($root, {
@@ -17,7 +19,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(20, this.store.getState());
+    return createTable(Table.rowsCount, Table.colsCount, this.store.getState());
   }
 
   prepare() {
@@ -72,16 +74,20 @@ export class Table extends ExcelComponent {
     if (keys.includes(key) && !evt.shiftKey) {
       evt.preventDefault();
 
-      const [row, col] = this.selection.current.dataset.id.split(':');
-      const $next = $.find(this.$root, findNextEl(key, {row, col}));
+      const {id} = this.selection.current.dataset;
+      const $next = $.find(
+          this.$root,
+          findNextEl(key, {
+            id,
+            maxRow: Table.rowsCount,
+            maxCol: Table.colsCount,
+          })
+      );
       this.selectCell($next);
     }
   }
 
   onInput(evt) {
-    // if (evt.target.dataset.type === 'cell') {
-    //   this.$emit('table:input', evt.target);
-    // }
     this.updateValueInStore($.text(evt.target));
   }
 
@@ -105,22 +111,23 @@ export class Table extends ExcelComponent {
   }
 }
 
-function findNextEl(key, {row, col}) {
+function findNextEl(key, {id, maxRow, maxCol}) {
   const MIN = 0;
+  let [row, col] = id.split(':');
   switch (key) {
     case 'Enter':
     case 'ArrowDown':
-      row++;
+      row = +row + 1 >= maxRow ? maxRow - 1 : +row + 1;
       break;
     case 'Tab':
     case 'ArrowRight':
-      col++;
+      col = +col + 1 >= maxCol ? maxCol - 1 : +col + 1;
       break;
     case 'ArrowLeft':
-      col = col - 1 < MIN ? MIN : col - 1;
+      col = col - 1 <= MIN ? MIN : col - 1;
       break;
     case 'ArrowUp':
-      row = row - 1 < MIN ? MIN : row - 1;
+      row = row - 1 <= MIN ? MIN : row - 1;
       break;
   }
 

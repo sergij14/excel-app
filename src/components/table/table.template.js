@@ -1,6 +1,6 @@
 import {parse, toInlineStyles} from '../../core/utils';
 
-const CHAR_CODES = {
+export const CHAR_CODES = {
   A: 65,
   Z: 90,
 };
@@ -50,8 +50,7 @@ function toChar(_, idx) {
   return String.fromCharCode(CHAR_CODES.A + idx);
 }
 
-export function createTable(rowsCount = 7, state = {}) {
-  const colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1;
+export function createTable(rowsCount = 7, colsCount, state = {}) {
   const rows = [];
 
   const cols = new Array(colsCount).fill('').map(toChar).map(toCol).join('');
