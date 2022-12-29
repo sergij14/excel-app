@@ -1,36 +1,30 @@
+import {createToolbar} from './toolbar.template';
+
 const {ExcelComponent} = require('../../core/ExcelComponent');
 
 export class Toolbar extends ExcelComponent {
-    static className = 'excel-toolbar'
+  static className = 'excel-toolbar';
 
+  constructor($root, config) {
+    super($root, {
+      name: 'Toolbar',
+      listeners: ['click'],
+      ...config,
+    });
+  }
 
-    constructor($root, config) {
-      super($root, {
-        name: 'Toolbar',
-        ...config,
-      });
+  toHTML() {
+    return createToolbar();
+  }
+
+  onClick(evt) {
+    const button =
+      (evt.target.dataset.tool && evt.target) ||
+      (evt.target.parentElement.dataset.tool && evt.target.parentElement);
+
+    if (button) {
+      const {tool, style} = button.dataset;
+      console.log(tool, style);
     }
-
-    toHTML() {
-      return `
-      <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-      <i class="fa-solid fa-align-left"></i>
-    </button>
-    <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-      <i class="fa-solid fa-align-center"></i>
-    </button>
-    <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-      <i class="fa-solid fa-align-right"></i>
-    </button>
-    <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-      <i class="fa-solid fa-bold"></i>
-    </button>
-    <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-      <i class="fa-solid fa-italic"></i>
-    </button>
-    <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-      <i class="fa-solid fa-underline"></i>
-    </button>
-      `;
-    }
+  }
 }
