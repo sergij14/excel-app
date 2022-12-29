@@ -1,3 +1,5 @@
+import {toInlineStyles} from '../../core/utils';
+
 const CHAR_CODES = {
   A: 65,
   Z: 90,
@@ -22,19 +24,6 @@ function toCell(state, row) {
       </div>
       `;
   };
-}
-
-function toInlineStyles(styleObj = {}) {
-  return Object.keys(styleObj)
-      .map(
-          (key) =>
-            `${key.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}: ${
-              styleObj[key]
-            }`
-      )
-      .toString()
-      .split(',')
-      .join(';');
 }
 
 function toCol(col = '') {

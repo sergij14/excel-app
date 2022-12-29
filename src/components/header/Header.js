@@ -1,4 +1,5 @@
 import {$} from '../../core/dom';
+import {debounce} from '../../core/utils';
 import {actions} from '../../store/actions';
 
 const {ExcelComponent} = require('../../core/ExcelComponent');
@@ -12,6 +13,10 @@ export class Header extends ExcelComponent {
         listeners: ['input'],
         ...config,
       });
+    }
+
+    prepare() {
+      this.onInput = debounce(this.onInput, 200);
     }
 
     toHTML() {

@@ -1,4 +1,4 @@
-import {storage} from '../core/createStore';
+import {storage} from '../core/utils';
 
 const defaultState = {
   currentValue: '',
