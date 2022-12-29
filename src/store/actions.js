@@ -1,8 +1,9 @@
-import {CHANGE_TEXT} from './types';
+import {CHANGE_VALUE, DELETE_VALUE} from './types';
 
 function changeValue(data) {
+  const isDataEmpty = data.value === '';
   return {
-    type: CHANGE_TEXT,
+    type: isDataEmpty ? DELETE_VALUE : CHANGE_VALUE,
     payload: data,
   };
 }

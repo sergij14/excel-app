@@ -1,1 +1,2 @@
-export const CHANGE_TEXT = 'CHANGE_TEXT';
+export const CHANGE_VALUE = 'CHANGE_VALUE';
+export const DELETE_VALUE = 'DELETE_VALUE';
