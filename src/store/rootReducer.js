@@ -1,36 +1,40 @@
-import {CHANGE_STYLE, CHANGE_VALUE, DELETE_VALUE} from './types';
+import {CHANGE_STYLE, CHANGE_TABLE_TITLE, CHANGE_VALUE, DELETE_VALUE} from './types';
 
 export function rootReducer(state, action) {
   let prevState;
+  const data = action.payload;
 
   switch (action.type) {
     case CHANGE_VALUE:
       prevState = state['dataState'] || {};
-      prevState[action.payload.id] = action.payload.value;
+      prevState[data.id] = data.value;
       return {
         ...state,
-        currentValue: action.payload.value,
+        currentValue: data.value,
         dataState: prevState,
       };
 
     case DELETE_VALUE:
       prevState = state['dataState'] || {};
-      delete prevState[action.payload.id];
+      delete prevState[data.id];
       return {
         ...state,
-        currentValue: action.payload.value,
+        currentValue: data.value,
         dataState: prevState,
       };
 
     case CHANGE_STYLE:
       prevState = state['dataStyle'] || {};
-      prevState[action.payload.id] = prevState[action.payload.id] || {};
-      prevState[action.payload.id][action.payload.key] =
-        action.payload.style[action.payload.key];
+      prevState[data.id] = prevState[data.id] || {};
+      prevState[data.id][data.key] =
+        data.style[data.key];
       return {
         ...state,
         dataStyle: prevState,
       };
+
+    case CHANGE_TABLE_TITLE:
+      return {...state, title: data};
 
     default:
       return state;

@@ -1,4 +1,4 @@
-import {CHANGE_STYLE, CHANGE_VALUE, DELETE_VALUE} from './types';
+import {CHANGE_STYLE, CHANGE_TABLE_TITLE, CHANGE_VALUE, DELETE_VALUE} from './types';
 
 function changeValue(data) {
   const isDataEmpty = data.value === '';
@@ -15,7 +15,16 @@ function changeStyle(data) {
   };
 }
 
+
+function changeTitle(data) {
+  return {
+    type: CHANGE_TABLE_TITLE,
+    payload: data,
+  };
+}
+
 export const actions = {
   changeValue,
   changeStyle,
+  changeTitle,
 };
