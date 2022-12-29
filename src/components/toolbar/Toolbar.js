@@ -28,7 +28,6 @@ export class Toolbar extends ExcelStateComponent {
     this.$on('table:select', ($cell) => {
       const {id} = $cell.dataset;
       const cellStyles = this.store.getState()['dataStyle'][id] || {...initialState};
-      console.log(cellStyles);
       this.setState({...initialState, ...cellStyles});
     });
   }

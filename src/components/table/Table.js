@@ -42,8 +42,6 @@ export class Table extends ExcelComponent {
       this.updateStyleInStore(style);
       $.css(this.selection.current, style);
     });
-
-    this.$subscribe((state) => console.log(state));
   }
 
   onMousedown(evt) {
