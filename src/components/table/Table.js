@@ -1,10 +1,9 @@
 import {$} from '../../core/dom';
+import {ExcelComponent} from '../../core/ExcelComponent';
 import {parse} from '../../core/utils';
 import {actions} from '../../store/actions';
 import {createTable} from './table.template';
 import {TableSelection} from './TableSelection';
-
-const {ExcelComponent} = require('../../core/ExcelComponent');
 
 export class Table extends ExcelComponent {
   static className = 'excel-table';
@@ -48,7 +47,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(evt) {
-    if (evt.target.dataset.type == 'cell') {
+    if ($.getNodeByDataType(evt.target, 'cell')) {
       this.selectCell(evt.target);
     }
   }

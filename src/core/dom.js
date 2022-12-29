@@ -44,6 +44,17 @@ function attr(node, {name, value}) {
   return node.getAttribute(name);
 }
 
+function getNodeByDataType(node, type) {
+  if (node.dataset.type === type) {
+    return node;
+  }
+  if (node.id === 'app') {
+    return;
+  }
+  return getNodeByDataType(node.parentElement, type);
+}
+
+
 export const $ = {
   find,
   create,
@@ -53,4 +64,5 @@ export const $ = {
   text,
   css,
   attr,
+  getNodeByDataType,
 };

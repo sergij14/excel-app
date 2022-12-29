@@ -1,3 +1,4 @@
+import {$} from '../../core/dom';
 import {ExcelStateComponent} from '../../core/ExcelStateComponent';
 import {createToolbar} from './toolbar.template';
 
@@ -41,10 +42,7 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   onClick(evt) {
-    const $button =
-      (evt.target.dataset.tool && evt.target) ||
-      (evt.target.parentElement.dataset.tool && evt.target.parentElement);
-
+    const $button = $.getNodeByDataType(evt.target, 'toolbar-btn');
     if ($button) {
       const style = JSON.parse($button.dataset.style);
       const key = Object.keys(style)[0];

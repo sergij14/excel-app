@@ -1,6 +1,5 @@
 import {$} from '../../core/dom';
-
-const {ExcelComponent} = require('../../core/ExcelComponent');
+import {ExcelComponent} from '../../core/ExcelComponent';
 
 export class Formula extends ExcelComponent {
     static className = 'excel-formula'
