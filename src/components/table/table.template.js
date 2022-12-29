@@ -4,18 +4,37 @@ const CHAR_CODES = {
 };
 
 function toCell(state, row) {
-  return (_, col) => `
-    <div
-        class="w-[80px]
-        overflow-hidden border-t-transparent border-l-transparent
-        border focus:visible:selected-cell focus:selected-cell"
-        data-id="${row}:${col}"
-        data-type="cell"
-        contenteditable
-    >
-      ${state['dataState'][`${row}:${col}`] || ''}
-    </div>
-    `;
+  return (_, col) => {
+    const id = `${row}:${col}`;
+    const value = state['dataState'][id];
+    const styles = state['dataStyle'][id];
+    return `
+      <div
+          class="w-[80px]
+          overflow-hidden border-t-transparent border-l-transparent
+          border focus:visible:selected-cell focus:selected-cell"
+          data-id="${row}:${col}"
+          data-type="cell"
+          style="${toInlineStyles(styles)}"
+          contenteditable
+      >
+        ${value || ''}
+      </div>
+      `;
+  };
+}
+
+function toInlineStyles(styleObj = {}) {
+  return Object.keys(styleObj)
+      .map(
+          (key) =>
+            `${key.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}: ${
+              styleObj[key]
+            }`
+      )
+      .toString()
+      .split(',')
+      .join(';');
 }
 
 function toCol(col = '') {
@@ -50,7 +69,10 @@ export function createTable(rowsCount = 7, state = {}) {
   rows.push(createRow('A-Z', cols));
 
   for (let row = 0; row < rowsCount; row++) {
-    const cells = new Array(colsCount).fill('').map(toCell(state, row)).join('');
+    const cells = new Array(colsCount)
+        .fill('')
+        .map(toCell(state, row))
+        .join('');
     rows.push(createRow(row + 1, cells));
   }
 

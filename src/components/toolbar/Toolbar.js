@@ -1,6 +1,13 @@
 import {ExcelStateComponent} from '../../core/ExcelStateComponent';
 import {createToolbar} from './toolbar.template';
 
+const initialState = {
+  textAlign: 'left',
+  fontWeight: 'normal',
+  textDecoration: 'none',
+  fontStyle: 'normal',
+};
+
 export class Toolbar extends ExcelStateComponent {
   static className = 'excel-toolbar';
 
@@ -13,13 +20,17 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   prepare() {
-    const initialState = {
-      textAlign: 'left',
-      fontWeight: 'normal',
-      textDecoration: 'none',
-      fontStyle: 'normal',
-    };
     this.initState(initialState);
+  }
+
+  init() {
+    super.init();
+    this.$on('table:select', ($cell) => {
+      const {id} = $cell.dataset;
+      const cellStyles = this.store.getState()['dataStyle'][id] || {...initialState};
+      console.log(cellStyles);
+      this.setState({...initialState, ...cellStyles});
+    });
   }
 
   get template() {
