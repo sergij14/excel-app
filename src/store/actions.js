@@ -1,4 +1,4 @@
-import {CHANGE_VALUE, DELETE_VALUE} from './types';
+import {CHANGE_STYLE, CHANGE_VALUE, DELETE_VALUE} from './types';
 
 function changeValue(data) {
   const isDataEmpty = data.value === '';
@@ -8,6 +8,14 @@ function changeValue(data) {
   };
 }
 
+function changeStyle(data) {
+  return {
+    type: CHANGE_STYLE,
+    payload: data,
+  };
+}
+
 export const actions = {
   changeValue,
+  changeStyle,
 };

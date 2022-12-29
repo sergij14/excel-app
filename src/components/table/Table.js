@@ -38,6 +38,11 @@ export class Table extends ExcelComponent {
       this.selection.current.focus();
     });
 
+    this.$on('toolbar:applyStyle', (style) => {
+      this.updateStyleInStore(style);
+      $.css(this.selection.current, style);
+    });
+
     this.$subscribe((state) => console.log(state));
   }
 
@@ -84,6 +89,16 @@ export class Table extends ExcelComponent {
     this.$dispatch(
         actions.changeValue({
           value,
+          id: this.selection.current.dataset.id,
+        })
+    );
+  }
+
+  updateStyleInStore(style) {
+    this.$dispatch(
+        actions.changeStyle({
+          style,
+          key: Object.keys(style)[0],
           id: this.selection.current.dataset.id,
         })
     );

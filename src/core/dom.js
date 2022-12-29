@@ -21,6 +21,12 @@ function classList(node) {
   };
 }
 
+function css(node, styles={}) {
+  Object.keys(styles).forEach((key) => {
+    node.style[key] = styles[key];
+  });
+}
+
 function text(root, txt) {
   if (typeof txt === 'string') {
     return root.textContent = txt.trim();
@@ -38,4 +44,5 @@ export const $ = {
   append,
   classList,
   text,
+  css,
 };

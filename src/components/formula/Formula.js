@@ -37,7 +37,6 @@ export class Formula extends ExcelComponent {
       });
 
       this.$subscribe((state) => {
-        console.log(state);
         this.$formula.value = state.currentValue;
       });
     }

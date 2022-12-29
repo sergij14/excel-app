@@ -1,7 +1,8 @@
-import {CHANGE_VALUE, DELETE_VALUE} from './types';
+import {CHANGE_STYLE, CHANGE_VALUE, DELETE_VALUE} from './types';
 
 export function rootReducer(state, action) {
   let prevState;
+
   switch (action.type) {
     case CHANGE_VALUE:
       prevState = state['dataState'] || {};
@@ -15,11 +16,20 @@ export function rootReducer(state, action) {
     case DELETE_VALUE:
       prevState = state['dataState'] || {};
       delete prevState[action.payload.id];
-      console.log(prevState);
       return {
         ...state,
         currentValue: action.payload.value,
         dataState: prevState,
+      };
+
+    case CHANGE_STYLE:
+      prevState = state['dataStyle'] || {};
+      prevState[action.payload.id] = prevState[action.payload.id] || {};
+      prevState[action.payload.id][action.payload.key] =
+        action.payload.style[action.payload.key];
+      return {
+        ...state,
+        dataStyle: prevState,
       };
 
     default:
