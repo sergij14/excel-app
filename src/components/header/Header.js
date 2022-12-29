@@ -1,8 +1,7 @@
 import {$} from '../../core/dom';
+import {ExcelComponent} from '../../core/ExcelComponent';
 import {debounce} from '../../core/utils';
 import {actions} from '../../store/actions';
-
-const {ExcelComponent} = require('../../core/ExcelComponent');
 
 export class Header extends ExcelComponent {
     static className = 'excel-header'
@@ -10,7 +9,7 @@ export class Header extends ExcelComponent {
     constructor($root, config) {
       super($root, {
         name: 'Header',
-        listeners: ['input'],
+        listeners: ['input', 'click'],
         ...config,
       });
     }
@@ -30,13 +29,9 @@ export class Header extends ExcelComponent {
         <div class="flex gap-2">
           <button
             class="hover:text-blue-500 rounded-md bg-gray-200 px-2 py-1 cursor-pointer"
-          >
-            <i class="fa-sharp fa-solid fa-trash"></i>
-          </button>
-          <button
-            class="hover:text-blue-500 rounded-md bg-gray-200 px-2 py-1 cursor-pointer"
-          >
-            <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+            data-type="reload-btn"
+            >
+            <i class="fa-solid fa-rotate-right"></i>
           </button>
         </div>
       `;
@@ -44,5 +39,13 @@ export class Header extends ExcelComponent {
 
     onInput(evt) {
       this.$dispatch(actions.changeTitle($.text(evt.target)));
+    }
+
+    onClick(evt) {
+      const $reloadButton = $.getNodeByDataType(evt.target, 'reload-btn');
+
+      if ($reloadButton) {
+        window.location.reload();
+      }
     }
 }

@@ -5,8 +5,7 @@ export class ExcelComponent extends DOMListener {
     super($root, config.listeners);
     this.name = config.name;
     this.emitter = config.emitter;
-    this.store= config.store;
-    this.storeSub = [];
+    this.store = config.store;
     this.unsubs = [];
     this.prepare();
   }
