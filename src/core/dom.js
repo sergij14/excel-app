@@ -23,12 +23,12 @@ function classList(node) {
 
 function text(root, txt) {
   if (typeof txt === 'string') {
-    return root.textContent = txt;
+    return root.textContent = txt.trim();
   }
   if (root.tagName.toLowerCase() === 'input') {
-    return root.value;
+    return root.value.trim();
   }
-  return root.textContent;
+  return root.textContent.trim();
 }
 
 export const $ = {

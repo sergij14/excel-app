@@ -12,7 +12,9 @@ function toCell(state, row) {
         data-id="${row}:${col}"
         data-type="cell"
         contenteditable
-    ></div>
+    >
+      ${state['dataState'][`${row}:${col}`] || ''}
+    </div>
     `;
 }
 
