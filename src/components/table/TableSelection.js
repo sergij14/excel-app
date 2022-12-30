@@ -4,22 +4,27 @@ export class TableSelection {
     static className = 'selected-cell'
 
     constructor() {
-      this.group = [];
       this.current = null;
+      this.$hightlitedCells = [];
     }
 
-    select($el) {
+    select($el, $hightlitedCells) {
       this.clear();
-      this.group = [];
-      this.group.push($el);
       $.classList($el).add(TableSelection.className);
+      $hightlitedCells.forEach(($el) => $.classList($el).add('highlighted-cell'));
 
       $el.focus();
       this.current = $el;
+      this.$hightlitedCells = $hightlitedCells;
     }
 
     clear() {
-      this.group.forEach((el) => $.classList(el).remove(TableSelection.className));
-      this.current = null;
+      if (this.current) {
+        $.classList(this.current).remove(TableSelection.className);
+        this.$hightlitedCells.forEach(($el) => $.classList($el).remove('highlighted-cell'));
+
+        this.current = null;
+        this.$hightlitedCells = [];
+      }
     }
 }

@@ -30,4 +30,7 @@
   .clicked-clear-btn {
     @apply text-red-500 hover:text-red-700 !important;
   }
+  .highlighted-cell {
+    @apply bg-gray-300;
+  }
 }

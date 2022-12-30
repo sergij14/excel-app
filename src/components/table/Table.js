@@ -55,7 +55,11 @@ export class Table extends ExcelComponent {
   }
 
   selectCell($cell) {
-    this.selection.select($cell);
+    const [row, col] = $cell.dataset.id.split(':');
+    const $row = $.find(this.$root, `[data-row-id="${row}"]`);
+    const $col = $.find(this.$root, `[data-col-id="${col}"]`);
+
+    this.selection.select($cell, [$row, $col]);
     this.$emit('table:select', $cell);
   }
 

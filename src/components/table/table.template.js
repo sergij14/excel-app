@@ -27,9 +27,12 @@ function toCell(state, row) {
   };
 }
 
-function toCol(col = '') {
+function toCol(col = '', idx) {
   return `
-    <div class="bg-gray-100 w-[80px] border-b border-r centered-cell">
+    <div
+        class="bg-gray-100 w-[80px] border-b border-r centered-cell"
+        data-col-id="${idx}"
+        >
         ${col}
     </div>
  `;
@@ -38,7 +41,12 @@ function toCol(col = '') {
 function createRow(idx, content = '') {
   return `
     <div class="inline-flex">
-        <div class="w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow">${idx}</div>
+        <div
+            class="w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow"
+            data-row-id="${idx - 1}"
+            >
+            ${idx}
+        </div>
         <div class="flex">
             ${content}
         </div>
