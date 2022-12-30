@@ -4,7 +4,7 @@
 
 @layer components {
   .excel {
-    @apply border-2 border-gray-300
+    @apply border-2 border-gray-300;
   }
   .excel-header {
     @apply flex justify-between p-2 border-b-2 border-gray-300;
@@ -32,5 +32,8 @@
   }
   .highlighted-cell {
     @apply bg-gray-300;
+  }
+  .toolbar-btn {
+    @apply hover:text-blue-500 rounded-md bg-gray-200 px-2 py-1 cursor-pointer;
   }
 }

@@ -1,4 +1,5 @@
-import {parse, toInlineStyles} from '../../core/utils';
+import {toInlineStyles} from '../../core/utils';
+import {parseCellData} from './table.helpers';
 
 export const CHAR_CODES = {
   A: 65,
@@ -21,7 +22,7 @@ function toCell(state, row) {
           style="${toInlineStyles(styles)}"
           contenteditable
       >
-        ${parse(value)}
+        ${parseCellData(value)}
       </div>
       `;
   };

@@ -1,7 +1,8 @@
+import FileSaver from 'file-saver';
 import {$} from '../../core/dom';
 import {ExcelComponent} from '../../core/ExcelComponent';
-import {parse} from '../../core/utils';
 import {actions} from '../../store/actions';
+import {findNextEl, formatDataForCSV, parseCellData} from './table.helpers';
 import {CHAR_CODES, createTable} from './table.template';
 import {TableSelection} from './TableSelection';
 
@@ -26,6 +27,16 @@ export class Table extends ExcelComponent {
     this.selection = new TableSelection();
   }
 
+  toCSV() {
+    const formatedData = formatDataForCSV({
+      data: this.store.getState().dataState,
+      rowsCount: Table.rowsCount,
+      colsCount: Table.colsCount,
+    });
+    const blob = new Blob([formatedData], {type: 'text/csv;charset=utf-8'});
+    FileSaver.saveAs(blob, `${this.store.getState().title || 'table-data'}.csv`);
+  }
+
   init() {
     super.init();
     const $cell = $.find(this.$root, '[data-id="0:0"]');
@@ -33,13 +44,17 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', (value) => {
       $.attr(this.selection.current, {name: 'data-value', value});
-      $.text(this.selection.current, parse(value));
+      $.text(this.selection.current, parseCellData(value));
 
       this.updateValueInStore(value);
     });
 
     this.$on('formula:done', () => {
       this.selection.current.focus();
+    });
+
+    this.$on('header:toCSV', () => {
+      this.toCSV();
     });
 
     this.$on('toolbar:applyStyle', (style) => {
@@ -115,25 +130,3 @@ export class Table extends ExcelComponent {
   }
 }
 
-function findNextEl(key, {id, maxRow, maxCol}) {
-  const MIN = 0;
-  let [row, col] = id.split(':');
-  switch (key) {
-    case 'Enter':
-    case 'ArrowDown':
-      row = +row + 1 >= maxRow ? maxRow - 1 : +row + 1;
-      break;
-    case 'Tab':
-    case 'ArrowRight':
-      col = +col + 1 >= maxCol ? maxCol - 1 : +col + 1;
-      break;
-    case 'ArrowLeft':
-      col = col - 1 <= MIN ? MIN : col - 1;
-      break;
-    case 'ArrowUp':
-      row = row - 1 <= MIN ? MIN : row - 1;
-      break;
-  }
-
-  return `[data-id="${row}:${col}"]`;
-}
