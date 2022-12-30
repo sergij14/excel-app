@@ -30,10 +30,6 @@ export class Formula extends ExcelComponent {
         this.$formula.value = $.attr($cell, {name: 'data-value'}) || $.text($cell);
       });
 
-      this.$on('table:input', ($cell) => {
-        this.$formula.value = $.text($cell);
-      });
-
       this.$subscribe((state) => {
         this.$formula.value = state.currentValue;
       });
