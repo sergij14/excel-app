@@ -2,12 +2,20 @@ function find(root, selector) {
   return root.querySelector(selector);
 }
 
-function create(tag) {
-  return document.createElement(tag);
+function create(tag, className = '') {
+  const node = document.createElement(tag);
+  if (className) {
+    node.classList.add(className);
+  }
+  return node;
 }
 
 function html(root, html) {
   root.innerHTML = html;
+}
+
+function clear(node) {
+  node.innerHTML = '';
 }
 
 function append(root, node) {
@@ -21,7 +29,7 @@ function classList(node) {
   };
 }
 
-function css(node, styles={}) {
+function css(node, styles = {}) {
   Object.keys(styles).forEach((key) => {
     node.style[key] = styles[key];
   });
@@ -29,7 +37,7 @@ function css(node, styles={}) {
 
 function text(root, txt) {
   if (typeof txt !== 'undefined') {
-    return root.textContent = txt;
+    return (root.textContent = txt);
   }
   if (root.tagName.toLowerCase() === 'input') {
     return root.value.trim();
@@ -54,11 +62,11 @@ function getNodeByDataType(node, type) {
   return getNodeByDataType(node.parentElement, type);
 }
 
-
 export const $ = {
   find,
   create,
   html,
+  clear,
   append,
   classList,
   text,

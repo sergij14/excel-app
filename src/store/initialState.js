@@ -7,6 +7,8 @@ export const defaultState = {
   title: 'New Table',
 };
 
+export const getInitialState = (state) => state? state : defaultState;
+
 export const initialState = storage('excel-state') ?
   storage('excel-state') :
   defaultState;

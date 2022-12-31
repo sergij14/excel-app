@@ -1,19 +1,18 @@
 import {Emitter} from '../../core/Emitter';
 import {$} from '../../core/dom';
 import {debounce, storage} from '../../core/utils';
+import {createStore} from '../../core/createStore';
+import {rootReducer} from '../../store/rootReducer';
+import {getInitialState} from '../../store/initialState';
+import {LocalStorageClient, StateProcessor} from './excel.storage';
 
 export class Excel {
   constructor(selector, {components, store}) {
     this.$el = $.find(document, selector);
-    this.store = store;
-    this.sub = null;
+    this.storeSub = null;
+    this.processor = new StateProcessor(new LocalStorageClient('excel-state'));
     this.emitter = new Emitter();
     this.components = components;
-    this.init();
-  }
-
-  init() {
-    this.sub = this.store.subscribe(this.stateListener);
   }
 
   stateListener = debounce((state) => {
@@ -21,14 +20,18 @@ export class Excel {
     storage('excel-state', state);
   }, 300);
 
-  getRoot() {
+  async getRoot() {
     const $root = $.create('div');
     $.classList($root).add('excel');
 
+    const state = await this.processor.get();
+    const store = createStore(rootReducer, getInitialState(state));
+    this.storeSub = store.subscribe(this.stateListener);
+
     const componentConfig = {
       emitter: this.emitter,
-      store: this.store,
-      storageOff: this.sub.unsubscribe,
+      store,
+      storageOff: this.storeSub.unsubscribe,
     };
 
     this.components = this.components.map((Component) => {
@@ -44,13 +47,25 @@ export class Excel {
     return $root;
   }
 
-  render() {
-    $.append(this.$el, this.getRoot());
+  creeateLoader() {
+    return `
+      <i class="fa-solid fa-spinner animate-spin"></i>
+    `;
+  }
+
+  async render() {
+    const $loader = $.create('div', 'loader');
+    $.html($loader, this.creeateLoader());
+    $.append(this.$el, $loader);
+    const $root = await this.getRoot();
+
+    $.clear(this.$el);
+    $.append(this.$el, $root);
     this.components.forEach((component) => component.init());
   }
 
   destroy() {
-    this.sub?.unsubscribe();
+    this.storeSub?.unsubscribe();
     this.components.forEach((component) => component.destroy());
   }
 }
