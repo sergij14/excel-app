@@ -1,13 +1,25 @@
 import {Emitter} from '../../core/Emitter';
 import {$} from '../../core/dom';
+import {debounce, storage} from '../../core/utils';
 
 export class Excel {
-  constructor(selector, config) {
+  constructor(selector, {components, store}) {
     this.$el = $.find(document, selector);
-    this.components = config.components;
-    this.store = config.store;
+    this.store = store;
+    this.sub = null;
     this.emitter = new Emitter();
+    this.components = components;
+    this.init();
   }
+
+  init() {
+    this.sub = this.store.subscribe(this.stateListener);
+  }
+
+  stateListener = debounce((state) => {
+    console.log(state);
+    storage('excel-state', state);
+  }, 300);
 
   getRoot() {
     const $root = $.create('div');
@@ -37,6 +49,7 @@ export class Excel {
   }
 
   destroy() {
+    this.sub?.unsubscribe();
     this.components.forEach((component) => component.destroy());
   }
 }
