@@ -28,6 +28,7 @@ export class Excel {
     const componentConfig = {
       emitter: this.emitter,
       store: this.store,
+      storageOff: this.sub.unsubscribe,
     };
 
     this.components = this.components.map((Component) => {

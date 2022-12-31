@@ -1,4 +1,6 @@
+import {defaultState} from '../store/initialState';
 import {DOMListener} from './DOMListener';
+import {storage} from './utils';
 
 export class ExcelComponent extends DOMListener {
   constructor($root, config = {}) {
@@ -6,6 +8,7 @@ export class ExcelComponent extends DOMListener {
     this.name = config.name;
     this.emitter = config.emitter;
     this.store = config.store;
+    this.storageOff = config.storageOff;
     this.unsubs = [];
     this.prepare();
   }
@@ -35,6 +38,11 @@ export class ExcelComponent extends DOMListener {
 
   init() {
     this.initDOMListeners();
+  }
+
+  clearStorage() {
+    this.storageOff();
+    storage('excel-state', defaultState);
   }
 
   destroy() {

@@ -1,6 +1,6 @@
 import {$} from '../../core/dom';
 import {ExcelComponent} from '../../core/ExcelComponent';
-import {debounce, doAsyncTask} from '../../core/utils';
+import {debounce, doWithDelay} from '../../core/utils';
 import {actions} from '../../store/actions';
 
 export class Header extends ExcelComponent {
@@ -53,9 +53,15 @@ export class Header extends ExcelComponent {
     this.$dispatch(actions.changeTitle($.text(evt.target)));
   }
 
-  async clearTable() {
-    await doAsyncTask(() => this.$dispatch(actions.clearTable()));
+  reloadPage() {
     window.location.reload();
+  }
+
+  clearTable() {
+    this.clearStorage();
+    this.$dispatch(actions.clearTable());
+
+    doWithDelay(this.reloadPage, 2000);
   }
 
   onClick(evt) {
@@ -69,7 +75,7 @@ export class Header extends ExcelComponent {
     }
 
     if ($reloadButton) {
-      window.location.reload();
+      this.reloadPage();
     }
 
     if ($csvButton) {

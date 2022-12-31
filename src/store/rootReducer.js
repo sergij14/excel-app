@@ -38,7 +38,6 @@ export function rootReducer(state, action) {
       return {...state, title: data};
 
     case CLEAR_TABLE:
-      localStorage.setItem('excel-state', null);
       return {...defaultState};
 
     default:

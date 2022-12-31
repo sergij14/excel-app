@@ -17,13 +17,10 @@ export function storage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-export function doAsyncTask(cb, delay = 1000) {
-  return new Promise((resolve, reject) => {
+export function doWithDelay(cb, delay = 1000) {
+  return setTimeout(() => {
     cb();
-    setTimeout(() => {
-      resolve();
-    }, delay);
-  });
+  }, delay);
 }
 
 export function toInlineStyles(styleObj = {}) {
