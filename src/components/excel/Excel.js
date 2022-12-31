@@ -40,7 +40,7 @@ export class Excel {
     return $root;
   }
 
-  creeateLoader() {
+  createLoader() {
     return `
       <i class="fa-solid fa-spinner animate-spin"></i>
     `;
@@ -48,7 +48,7 @@ export class Excel {
 
   async render() {
     const $loader = $.create('div', 'loader');
-    $.html($loader, this.creeateLoader());
+    $.html($loader, this.createLoader());
     $.append(this.$el, $loader);
     const $root = await this.getRoot();
 
