@@ -1,6 +1,5 @@
 import {Emitter} from '../../core/Emitter';
 import {$} from '../../core/dom';
-import {debounce, storage} from '../../core/utils';
 import {createStore} from '../../core/createStore';
 import {rootReducer} from '../../store/rootReducer';
 import {getInitialState} from '../../store/initialState';
@@ -15,23 +14,17 @@ export class Excel {
     this.components = components;
   }
 
-  stateListener = debounce((state) => {
-    console.log(state);
-    storage('excel-state', state);
-  }, 300);
-
   async getRoot() {
     const $root = $.create('div');
     $.classList($root).add('excel');
 
     const state = await this.processor.get();
     const store = createStore(rootReducer, getInitialState(state));
-    this.storeSub = store.subscribe(this.stateListener);
+    this.storeSub = store.subscribe(this.processor.listen);
 
     const componentConfig = {
       emitter: this.emitter,
       store,
-      storageOff: this.storeSub.unsubscribe,
     };
 
     this.components = this.components.map((Component) => {

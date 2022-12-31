@@ -28,7 +28,7 @@ export class LocalStorageClient {
   get() {
     // return Promise.resolve(storage(this.name));
     return new Promise((resolve) => {
-      doWithDelay(() => resolve(storage(this.namsde)), 1200);
+      doWithDelay(() => resolve(storage(this.name)), 1200);
     });
   }
 }

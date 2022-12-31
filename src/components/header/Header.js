@@ -1,6 +1,6 @@
 import {$} from '../../core/dom';
 import {ExcelComponent} from '../../core/ExcelComponent';
-import {debounce, doWithDelay} from '../../core/utils';
+import {debounce} from '../../core/utils';
 import {actions} from '../../store/actions';
 
 export class Header extends ExcelComponent {
@@ -35,12 +35,6 @@ export class Header extends ExcelComponent {
           </button>
           <button
             class="toolbar-btn"
-            data-type="clear-btn"
-          >
-            <i class="fa-sharp fa-solid fa-trash"></i>
-          </button>
-          <button
-            class="toolbar-btn"
             data-type="csv-btn"
           >
             <i class="fa-solid fa-download"></i>
@@ -53,29 +47,12 @@ export class Header extends ExcelComponent {
     this.$dispatch(actions.changeTitle($.text(evt.target)));
   }
 
-  reloadPage() {
-    window.location.reload();
-  }
-
-  clearTable() {
-    this.clearStorage();
-    this.$dispatch(actions.clearTable());
-
-    doWithDelay(this.reloadPage, 2000);
-  }
-
   onClick(evt) {
-    const $clearButton = $.getNodeByDataType(evt.target, 'clear-btn');
     const $reloadButton = $.getNodeByDataType(evt.target, 'reload-btn');
     const $csvButton = $.getNodeByDataType(evt.target, 'csv-btn');
 
-    if ($clearButton) {
-      this.clearTable();
-      $.classList($clearButton).add('clicked-clear-btn');
-    }
-
     if ($reloadButton) {
-      this.reloadPage();
+      window.location.reload();
     }
 
     if ($csvButton) {
