@@ -9,19 +9,16 @@ export function parseCellData(value = '') {
   return value;
 }
 
-
 export function formatDataForCSV({data, rowsCount, colsCount}) {
   let result = '';
-  const obj = {};
   new Array(rowsCount).fill('').forEach((_, row) => {
     new Array(colsCount).fill('').forEach((_, col) => {
       const id = `${row}:${col}`;
-      obj[row] = [...(obj[row] || []), parseCellData(data[id]) || ''];
+      const cellValue = parseCellData(data[id]);
+      const isLastCol = col === colsCount - 1;
+      result += cellValue ? (isLastCol ? cellValue + '\n' : cellValue + ',') : (isLastCol ? '\n' : '' + ',');
     });
   });
-  Object.entries(obj).forEach(
-      ([_, rowData]) => (result += rowData.toString() + '\n')
-  );
   return result;
 }
 
