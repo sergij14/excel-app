@@ -33,12 +33,6 @@ export class Header extends ExcelComponent {
             >
             <i class="fa-solid fa-rotate-right"></i>
           </button>
-          <button
-            class="toolbar-btn"
-            data-type="csv-btn"
-          >
-            <i class="fa-solid fa-download"></i>
-          </button>
         </div>
       `;
   }
@@ -48,12 +42,7 @@ export class Header extends ExcelComponent {
   }
 
   onClick(evt) {
-    const $reloadButton = $.getNodeByDataType(evt.target, 'reload-btn');
     const $csvButton = $.getNodeByDataType(evt.target, 'csv-btn');
-
-    if ($reloadButton) {
-      window.location.reload();
-    }
 
     if ($csvButton) {
       this.$emit('header:toCSV');
