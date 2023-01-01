@@ -29,9 +29,9 @@ export class Header extends ExcelComponent {
         <div class="flex gap-2">
           <button
             class="toolbar-btn"
-            data-type="reload-btn"
-            >
-            <i class="fa-solid fa-rotate-right"></i>
+            data-type="csv-btn"
+          >
+            <i class="fa-solid fa-download"></i>
           </button>
         </div>
       `;
