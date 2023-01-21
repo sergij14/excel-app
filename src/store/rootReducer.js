@@ -30,6 +30,7 @@ export function rootReducer(state, action) {
         data.style[data.key];
       return {
         ...state,
+        currentValue: state['dataState'][data.id] || '',
         dataStyle: prevState,
       };
 
