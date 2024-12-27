@@ -1,3 +1,3 @@
-export class DOMListener {
+export class DomListener {
   constructor() {}
 }
