@@ -6,10 +6,6 @@ export class Dom {
         : selector;
   }
 
-  getElementNode() {
-    return this.$el;
-  }
-
   html(html) {
     if (typeof html === "string") {
       this.$el.innerHTML = html;
