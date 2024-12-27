@@ -16,6 +16,12 @@ export class Dom {
     return this.$el.outerHTML.trim();
   }
 
+  css(styles = {}) {
+    Object.keys(styles).forEach((key) => {
+      this.$el.style[key] = styles[key];
+    });
+  }
+
   clear() {
     this.html("");
 

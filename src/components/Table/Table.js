@@ -29,13 +29,13 @@ export class Table extends ExcelComponent {
           const delta = moveEv.pageX - parentCoords.right;
           const newWidth = `${parentCoords.width + delta}px`;
 
-          $parent.$el.style.width = newWidth;
-          $cells.forEach((el) => (el.style.width = newWidth));
+          $parent.css({ width: newWidth });
+          $cells.forEach((el) => $(el).css({ width: newWidth }));
         } else {
           const delta = moveEv.pageY - parentCoords.bottom;
           const newHeight = `${parentCoords.height + delta}px`;
 
-          $parent.$el.style.height = newHeight;
+          $parent.css({ height: newHeight });
         }
       };
 
