@@ -1,20 +1,20 @@
+import { $ } from "../core/Dom";
+
 export class Excel {
   constructor(selector, config) {
-    this.$root = document.querySelector(selector);
+    this.$root = $(selector);
     this.components = config.components || [];
   }
 
   render() {
-    const $container = document.createElement("div");
-    $container.classList.add("excel");
+    const $container = $.create("div", "excel");
 
     this.components.forEach((Component) => {
-      const $el = document.createElement("div");
-      $el.classList.add(Component.cn);
+      const $el = $.create("div", Component.cn);
 
       const component = new Component($el);
-      $el.insertAdjacentHTML("beforeend", component.render());
 
+      $el.html(component.getHTML());
       $container.append($el);
     });
 
