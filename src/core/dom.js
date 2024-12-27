@@ -37,6 +37,10 @@ export class Dom {
     return this.$el.getBoundingClientRect()
   }
 
+  get dataset(){
+    return this.$el.dataset
+  }
+
   on(listener, fn) {
     this.$el.addEventListener(listener, fn);
   }

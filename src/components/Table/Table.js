@@ -24,9 +24,12 @@ export class Table extends ExcelComponent {
 
       document.onmousemove = (moveEv) => {
         const delta = moveEv.pageX - parentCoords.right;
-        const newWidth = parentCoords.width + delta;
+        const newWidth = `${parentCoords.width + delta}px`;
 
-        $parent.$el.style.width = newWidth + "px";
+        $parent.$el.style.width = newWidth;
+        document
+          .querySelectorAll(`[data-col="${$parent.dataset.col}"]`)
+          .forEach((el) => (el.style.width = newWidth));
       };
 
       document.onmouseup = () => {

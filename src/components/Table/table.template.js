@@ -3,28 +3,28 @@ const CHAR_CODES = {
   Z: 90,
 };
 
-function createCell(value = "") {
+function createCell(_, idx = "") {
   return `
     <div
         class="cell"
+        data-col="${idx}"
         spellcheck="false"
         contenteditable
     >
-      ${value}
     </div>
   `;
 }
 
-function createCol(data = "") {
+function createCol(col = "", idx = "") {
   return `
-      <div class="col" data-type="resizable">
-          ${data}
+      <div class="col" data-type="resizable" data-col="${idx}">
+          ${col}
           <div class="resize resize-col" data-resize="col"></div>
       </div>
    `;
 }
 
-function createRow(data = "", idx = "") {
+function createRow(row = "", idx = "") {
   return `
       <div class="inline-flex" data-type="resizable">
           <div class="row">
@@ -36,7 +36,7 @@ function createRow(data = "", idx = "") {
               }
           </div>
           <div class="flex">
-              ${data}
+              ${row}
           </div>
       </div>
       `;
@@ -52,7 +52,7 @@ export function createTable(rowsCount = 20) {
 
   const cols = new Array(colsCount)
     .fill("")
-    .map((_, idx) => createCol(getChar(idx)))
+    .map((_, idx) => createCol(getChar(idx), idx))
     .join("");
 
   rows.push(createRow(cols));
