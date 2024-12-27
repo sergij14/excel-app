@@ -5,12 +5,7 @@ const CHAR_CODES = {
 
 function createCell(_, idx = "") {
   return `
-    <div
-        class="cell"
-        data-col="${idx}"
-        spellcheck="false"
-        contenteditable
-    >
+    <div class="cell" data-col="${idx}" spellcheck="false" contenteditable>
     </div>
   `;
 }
@@ -35,9 +30,7 @@ function createRow(row = "", idx = "") {
                   : ""
               }
           </div>
-          <div class="flex">
-              ${row}
-          </div>
+          <div class="flex">${row}</div>
       </div>
       `;
 }

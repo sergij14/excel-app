@@ -33,12 +33,16 @@ export class Dom {
     return $(this.$el.closest(selector));
   }
 
-  getCoords(){
-    return this.$el.getBoundingClientRect()
+  getCoords() {
+    return this.$el.getBoundingClientRect();
   }
 
-  get dataset(){
-    return this.$el.dataset
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector);
+  }
+
+  get dataset() {
+    return this.$el.dataset;
   }
 
   on(listener, fn) {
