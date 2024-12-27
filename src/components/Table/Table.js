@@ -7,7 +7,7 @@ export class Table extends ExcelComponent {
     super($el);
   }
 
-  render() {
+  getHTML() {
     return `
     <div class="flex border-b-2 border-gray-300">
     <div class="flex w-[80px] border-r-2 border-gray-200"></div>

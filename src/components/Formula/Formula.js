@@ -7,7 +7,7 @@ export class Formula extends ExcelComponent {
     super($el);
   }
 
-  render() {
+  getHTML() {
     return `
     <div class="w-[60px] bg-gray-100 border-r centered-cell">fx</div>
     <div class="flex-grow">

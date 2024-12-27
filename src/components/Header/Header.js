@@ -7,7 +7,7 @@ export class Header extends ExcelComponent {
     super($el);
   }
 
-  render() {
+  getHTML() {
     return `
         <input
           type="text"

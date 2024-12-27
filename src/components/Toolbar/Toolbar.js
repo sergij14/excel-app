@@ -7,7 +7,7 @@ export class Toolbar extends ExcelComponent {
     super($el);
   }
 
-  render() {
+  getHTML() {
     return `
     <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
     <i class="fa-solid fa-align-left"></i>
