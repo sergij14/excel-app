@@ -17,19 +17,23 @@ function createCell(value = "") {
 
 function createCol(data = "") {
   return `
-      <div class="col">
+      <div class="col" data-type="resizable">
           ${data}
-          <div class="resize resize-col"></div>
+          <div class="resize resize-col" data-resize="col"></div>
       </div>
    `;
 }
 
 function createRow(data = "", idx = "") {
   return `
-      <div class="inline-flex">
+      <div class="inline-flex" data-type="resizable">
           <div class="row">
               ${idx ? idx : "-"}
-              ${idx ? '<div class="resize resize-row"></div>' : ""}
+              ${
+                idx
+                  ? '<div class="resize resize-row" data-resize="row"></div>'
+                  : ""
+              }
           </div>
           <div class="flex">
               ${data}

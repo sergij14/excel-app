@@ -29,6 +29,14 @@ export class Dom {
     this.$el.append(node);
   }
 
+  closest(selector) {
+    return $(this.$el.closest(selector));
+  }
+
+  getCoords(){
+    return this.$el.getBoundingClientRect()
+  }
+
   on(listener, fn) {
     this.$el.addEventListener(listener, fn);
   }
