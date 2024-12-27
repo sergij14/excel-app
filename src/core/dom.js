@@ -28,6 +28,10 @@ export class Dom {
     }
     this.$el.append(node);
   }
+
+  on(listener, fn) {
+    this.$el.addEventListener(listener, fn)
+  }
 }
 
 export function $(selector) {

@@ -3,7 +3,7 @@ import { DomListener } from "./DomListener";
 export class ExcelComponent extends DomListener {
   constructor($el, config = {}) {
     super($el, config.listeners);
-    this.init();
+    this.name = config.name || '';
   }
 
   render() {

@@ -18,4 +18,9 @@ export class Formula extends ExcelComponent {
     </div>
     `;
   }
+
+  onInput(ev){
+    console.log(ev.target.value);
+    
+  }
 }
