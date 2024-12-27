@@ -11,7 +11,7 @@ export class Header extends ExcelComponent {
     return `
         <input
           type="text"
-          value=""
+          value="New Table"
           class="focus:outline-none"
         />
         <div class="flex gap-2">
