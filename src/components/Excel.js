@@ -6,18 +6,27 @@ export class Excel {
     this.components = config.components || [];
   }
 
-  render() {
+  getContainer() {
     const $container = $.create("div", "excel");
 
-    this.components.forEach((Component) => {
+    this.components = this.components.map((Component) => {
       const $el = $.create("div", Component.cn);
 
       const component = new Component($el);
 
       $el.html(component.getHTML());
       $container.append($el);
+
+      return component;
     });
 
-    this.$root.append($container);
+    return $container;
+  }
+
+  render() {
+    this.$root.append(this.getContainer());
+    this.components.forEach((component) => {
+      component.init();
+    });
   }
 }

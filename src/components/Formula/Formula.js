@@ -4,7 +4,10 @@ export class Formula extends ExcelComponent {
   static cn = "excel-formula";
 
   constructor($el) {
-    super($el);
+    super($el, {
+      name: "Formula",
+      listeners: ["input"],
+    });
   }
 
   getHTML() {
