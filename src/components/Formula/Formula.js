@@ -1,11 +1,18 @@
-import { ExcelComponent } from "../../core/ExcelComponent"
+import { ExcelComponent } from "../../core/ExcelComponent";
 
 export class Formula extends ExcelComponent {
-    constructor(){
-        super()
-    }
+  static cn = "excel-formula";
 
-    render(){
-        return `<h1>Formula</h1>`
-    }
+  constructor($el) {
+    super($el);
+  }
+
+  render() {
+    return `
+    <div class="w-[60px] bg-gray-100 border-r centered-cell">fx</div>
+    <div class="flex-grow">
+      <input class="w-full px-2 focus:outline-none" type="text" />
+    </div>
+    `;
+  }
 }
