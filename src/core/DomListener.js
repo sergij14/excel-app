@@ -23,5 +23,11 @@ export class DomListener {
     });
   }
 
-  removeListeners() {}
+  removeListeners() {
+    this.listeners.forEach((listener) => {
+      const method = `on${capitalize(listener)}`;
+
+      this.$el.off(listener, this[method]);
+    });
+  }
 }

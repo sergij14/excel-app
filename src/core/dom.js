@@ -30,7 +30,11 @@ export class Dom {
   }
 
   on(listener, fn) {
-    this.$el.addEventListener(listener, fn)
+    this.$el.addEventListener(listener, fn);
+  }
+
+  off(listener, fn) {
+    this.$el.removeEventListener(listener, fn);
   }
 }
 

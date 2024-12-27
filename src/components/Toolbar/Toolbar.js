@@ -4,7 +4,10 @@ export class Toolbar extends ExcelComponent {
   static cn = "excel-toolbar";
 
   constructor($el) {
-    super($el);
+    super($el, {
+      name: "Toolbar",
+      listeners: ["click"],
+    });
   }
 
   getHTML() {
@@ -28,5 +31,9 @@ export class Toolbar extends ExcelComponent {
     <i class="fa-solid fa-underline"></i>
   </button>
     `;
+  }
+
+  onClick(ev) {
+    console.log(ev.target);
   }
 }
