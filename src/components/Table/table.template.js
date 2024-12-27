@@ -6,9 +6,7 @@ const CHAR_CODES = {
 function createCell(value = "") {
   return `
     <div
-        class="w-[120px]
-        overflow-hidden border-t-transparent border-l-transparent
-        border focus:visible:selected-cell focus:selected-cell"
+        class="cell"
         spellcheck="false"
         contenteditable
     >
@@ -19,20 +17,19 @@ function createCell(value = "") {
 
 function createCol(data = "") {
   return `
-      <div class="bg-gray-100 w-[120px] border-b border-r centered-cell relative">
+      <div class="col">
           ${data}
           <div class="resize resize-col"></div>
       </div>
    `;
 }
 
-function createRow(idx = "", data = "") {
-  const hasValue = Boolean(idx);
+function createRow(data = "", idx = "") {
   return `
       <div class="inline-flex">
-          <div class="w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow relative">
-              ${hasValue ? idx : "-"}
-              ${hasValue ? '<div class="resize resize-row"></div>' : ""}
+          <div class="row">
+              ${idx ? idx : "-"}
+              ${idx ? '<div class="resize resize-row"></div>' : ""}
           </div>
           <div class="flex">
               ${data}
@@ -41,7 +38,7 @@ function createRow(idx = "", data = "") {
       `;
 }
 
-function getChar(_, idx) {
+function getChar(idx) {
   return String.fromCharCode(CHAR_CODES.A + idx);
 }
 
@@ -51,15 +48,14 @@ export function createTable(rowsCount = 20) {
 
   const cols = new Array(colsCount)
     .fill("")
-    .map(getChar)
-    .map(createCol)
+    .map((_, idx) => createCol(getChar(idx)))
     .join("");
 
-  rows.push(createRow(0, cols));
+  rows.push(createRow(cols));
 
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(colsCount).fill("").map(createCell).join("");
-    rows.push(createRow(i + 1, cells));
+    rows.push(createRow(cells, i + 1));
   }
 
   return rows.join("");

@@ -21,6 +21,15 @@
 }
 
 @layer utilities {
+  .cell {
+    @apply w-[120px] overflow-hidden border-t-transparent border-l-transparent border focus:selected-cell;
+  }
+  .col {
+    @apply bg-gray-100 w-[120px] border-b border-r centered-cell relative;
+  }
+  .row {
+    @apply w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow relative;
+  }
   .centered-cell {
     @apply flex justify-center items-center;
   }
