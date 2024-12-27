@@ -1,3 +1,5 @@
+import './styles/index.css';
+
 import { Excel } from "./components/Excel";
 import { Formula } from "./components/Formula/Formula";
 import { Header } from "./components/Header/Header";
