@@ -19,17 +19,20 @@ function createCell(value = "") {
 
 function createCol(data = "") {
   return `
-      <div class="bg-gray-100 w-[120px] border-b border-r centered-cell">
+      <div class="bg-gray-100 w-[120px] border-b border-r centered-cell relative">
           ${data}
+          <div class="resize resize-col"></div>
       </div>
    `;
 }
 
 function createRow(idx = "", data = "") {
+  const hasValue = Boolean(idx);
   return `
       <div class="inline-flex">
-          <div class="w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow">
-              ${idx}
+          <div class="w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow relative">
+              ${hasValue ? idx : "-"}
+              ${hasValue ? '<div class="resize resize-row"></div>' : ""}
           </div>
           <div class="flex">
               ${data}
@@ -52,7 +55,7 @@ export function createTable(rowsCount = 20) {
     .map(createCol)
     .join("");
 
-  rows.push(createRow("-", cols));
+  rows.push(createRow(0, cols));
 
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(colsCount).fill("").map(createCell).join("");

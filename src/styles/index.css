@@ -24,6 +24,15 @@
   .centered-cell {
     @apply flex justify-center items-center;
   }
+  .resize {
+    @apply bg-blue-500 absolute opacity-0 hover:opacity-100;
+  }
+  .resize-col {
+    @apply w-[4px] h-full top-0 bottom-0 right-0 hover:cursor-col-resize;
+  }
+  .resize-row {
+    @apply h-[4px] w-full bottom-0 hover:cursor-row-resize;
+  }
   .selected-cell {
     @apply outline-none border border-blue-500;
   }
