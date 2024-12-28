@@ -5,7 +5,7 @@ const MIN_CELL_HEIGHT = 26;
 
 export function getNextCellSelector(key, { id, maxRow, maxCol }) {
   const MIN = 0;
-  let [col, row] = id;
+  let [row, col] = id;
 
   switch (key) {
     case "Enter":
@@ -26,7 +26,7 @@ export function getNextCellSelector(key, { id, maxRow, maxCol }) {
       break;
   }
 
-  return `[data-id="${col}:${row}"]`;
+  return `[data-id="${row}:${col}"]`;
 }
 
 export function resizeHandler(ev, $el) {
