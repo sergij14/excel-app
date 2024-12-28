@@ -5,3 +5,7 @@ export function capitalize(str = "") {
 export function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
+
+export function isEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}

@@ -1,4 +1,4 @@
-import { clone } from "./utils";
+import { clone, isEqual } from "./utils";
 
 export class Store {
   constructor(initialState = {}, config = {}) {
@@ -12,9 +12,13 @@ export class Store {
 
   setState(value) {
     const currState = clone(this.state);
-    const nextState = Object.assign(currState, clone(value));
+    const nextState = Object.assign(clone(currState), clone(value));
 
-    this.emitter.emit("Store:SetState", nextState);
+    this.emitter.emit(
+      "Store:StateUpdate",
+      (comparator) => !isEqual(comparator(currState), comparator(nextState)),
+      nextState
+    );
     this.state = nextState;
     return nextState;
   }

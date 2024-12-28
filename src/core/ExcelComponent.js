@@ -17,13 +17,13 @@ export class ExcelComponent extends DomListener {
 
   prepare() {}
 
-  subscribe(eventName, cb) {
-    const unsub = this.emitter.subscribe(eventName, cb);
+  subscribe(eventName, cb, condition) {
+    const unsub = this.emitter.subscribe(eventName, cb, condition);
     this.unsubs.push(unsub);
   }
 
-  emit(eventName, ...args) {
-    this.emitter.emit(eventName, ...args);
+  emit(eventName, comparator, ...args) {
+    this.emitter.emit(eventName, comparator, ...args);
   }
 
   init() {

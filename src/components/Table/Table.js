@@ -26,11 +26,9 @@ export class Table extends ExcelComponent {
   }
 
   selectCell($cell) {
-    this.emit(`${this.name}:Select`, $cell);
+    this.emit(`${this.name}:Select`, undefined, $cell);
     this.selection.select($cell);
     this.store.setState({ table: { activeCell: $cell.dataset.id } });
-
-    console.log(this.store.getState());
   }
 
   init() {
@@ -45,6 +43,16 @@ export class Table extends ExcelComponent {
     this.subscribe("Formula:InputDone", () => {
       this.selection.current.focus();
     });
+
+    this.subscribe(
+      "Store:StateUpdate",
+      (data) => {
+        console.log("nerwstate", data);
+      },
+      (state) => ({
+        toolbar: state.table.activeCell,
+      })
+    );
   }
 
   onMousedown(ev) {
@@ -56,7 +64,7 @@ export class Table extends ExcelComponent {
   }
 
   onInput(ev) {
-    this.emit(`${this.name}:Input`, $(ev.target));
+    this.emit(`${this.name}:Input`, undefined, $(ev.target));
   }
 
   onKeydown(ev) {
