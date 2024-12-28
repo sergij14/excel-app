@@ -22,7 +22,7 @@ export class Formula extends ExcelComponent {
   }
 
   onInput(ev) {
-    this.emit(`${this.name}:Input`, undefined, $(ev.target).text());
+    this.emit(`${this.name}:Input`, $(ev.target).text());
   }
 
   onKeydown(ev) {

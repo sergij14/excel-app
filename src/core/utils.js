@@ -16,3 +16,17 @@ export function storage(key, data) {
   }
   localStorage.setItem(key, JSON.stringify(data));
 }
+
+export function get(objectParam, pathStr) {
+  const path = pathStr.split(".");
+
+  let index = 0;
+  let object = objectParam;
+
+  while (object != null && index < path.length) {
+    object = object[String(path[index])];
+    index++;
+  }
+
+  return index === path.length ? object : undefined;
+}

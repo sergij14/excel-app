@@ -17,8 +17,8 @@ export class ExcelComponent extends DomListener {
 
   prepare() {}
 
-  subscribe(eventName, cb, condition) {
-    const unsub = this.emitter.subscribe(eventName, cb, condition);
+  subscribe(eventName, cb, metadata) {
+    const unsub = this.emitter.subscribe(eventName, cb, metadata);
     this.unsubs.push(unsub);
   }
 

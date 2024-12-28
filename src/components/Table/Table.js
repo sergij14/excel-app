@@ -27,7 +27,7 @@ export class Table extends ExcelComponent {
   }
 
   selectCell($cell) {
-    this.emit(`${this.name}:Select`, undefined, $cell);
+    this.emit(`${this.name}:Select`, $cell);
     this.selection.select($cell);
     this.store.setState((prev) => ({
       ...prev,
@@ -51,6 +51,14 @@ export class Table extends ExcelComponent {
     this.subscribe("Formula:InputDone", () => {
       this.selection.current.focus();
     });
+
+    this.subscribe(
+      "Store:StateUpdate",
+      (data) => {
+        console.log(data);
+      },
+      { path: "table.colState" }
+    );
   }
 
   async resizeTable(ev) {
@@ -74,7 +82,7 @@ export class Table extends ExcelComponent {
   }
 
   onInput(ev) {
-    this.emit(`${this.name}:Input`, undefined, $(ev.target));
+    this.emit(`${this.name}:Input`, $(ev.target));
   }
 
   onKeydown(ev) {

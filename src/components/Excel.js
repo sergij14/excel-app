@@ -11,10 +11,7 @@ export class Excel {
     this.store = new Store(storage("excel-state") || config.initialState, {
       emitter: this.emitter,
     });
-
-    this.emitter.subscribe("Store:StateUpdate", (data) => {
-      storage("excel-state", data);
-    });
+    this.syncStorage();
   }
 
   getContainer() {
@@ -31,6 +28,12 @@ export class Excel {
     });
 
     return $container;
+  }
+
+  syncStorage() {
+    this.emitter.subscribe("Store:StateUpdate", (data) => {
+      storage("excel-state", data);
+    });
   }
 
   render() {
