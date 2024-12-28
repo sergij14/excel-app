@@ -28,6 +28,9 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.emit(`${this.name}:Select`, $cell);
     this.selection.select($cell);
+    this.store.setState({ table: { activeCell: $cell.dataset.id } });
+
+    console.log(this.store.getState());
   }
 
   init() {
