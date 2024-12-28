@@ -28,7 +28,10 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.emit(`${this.name}:Select`, undefined, $cell);
     this.selection.select($cell);
-    this.store.setState({ table: { activeCell: $cell.dataset.id } });
+    this.store.setState((prev) => ({
+      ...prev,
+      table: { ...prev.table, activeCell: $cell.dataset.id },
+    }));
   }
 
   init() {
@@ -47,17 +50,29 @@ export class Table extends ExcelComponent {
     this.subscribe(
       "Store:StateUpdate",
       (data) => {
-        console.log("nerwstate", data);
+        console.log("newState", data);
       },
       (state) => ({
-        toolbar: state.table.activeCell,
+        colState: state.table.colState,
       })
     );
   }
 
+  async resizeTable(ev) {
+    try {
+      const { id, value } = await resizeHandler(ev, this.$el);
+      const newState = this.store.getState();
+      newState.table.colState[id] = value;
+
+      this.store.setState(newState);
+    } catch (err) {
+      console.warn("Resize error", err);
+    }
+  }
+
   onMousedown(ev) {
     if (ev.target.dataset.resize) {
-      resizeHandler(ev, this.$el);
+      this.resizeTable(ev);
     } else if (ev.target.dataset.type === "cell") {
       this.selectCell($(ev.target));
     }

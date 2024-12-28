@@ -12,7 +12,9 @@ export class Store {
 
   setState(value) {
     const currState = clone(this.state);
-    const nextState = Object.assign(clone(currState), clone(value));
+    const nextState = clone(
+      typeof value === "function" ? value(currState) : value
+    );
 
     this.emitter.emit(
       "Store:StateUpdate",

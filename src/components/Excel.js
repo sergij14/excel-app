@@ -2,14 +2,12 @@ import { $ } from "../core/dom";
 import { Emitter } from "../core/Emitter";
 import { Store } from "../core/Store";
 
-const initialState = { toolbar: {}, table: { activeCell: "0:0" } };
-
 export class Excel {
   constructor(selector, config) {
     this.$root = $(selector);
     this.components = config.components || [];
     this.emitter = new Emitter();
-    this.store = new Store(initialState, { emitter: this.emitter });
+    this.store = new Store(config.initialState, { emitter: this.emitter });
   }
 
   getContainer() {
