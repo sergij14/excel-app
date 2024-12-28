@@ -30,7 +30,7 @@ export class Table extends ExcelComponent {
     this.selection.selectOne($cell);
 
     this.onFormulaInput = this.onFormulaInput.bind(this);
-    this.emitter.subscribe("Formula:Input", this.onFormulaInput);
+    this.subscribe("Formula:Input", this.onFormulaInput);
   }
 
   onFormulaInput(value) {

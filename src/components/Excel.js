@@ -30,4 +30,10 @@ export class Excel {
       component.init();
     });
   }
+
+  destory() {
+    this.components.forEach((component) => {
+      component.destory();
+    });
+  }
 }

@@ -21,6 +21,6 @@ export class Formula extends ExcelComponent {
   }
 
   onInput(ev) {
-    this.emitter.emit(`${this.name}:Input`, ev.target.value);
+    this.emit(`${this.name}:Input`, ev.target.value);
   }
 }
