@@ -1,4 +1,5 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
+import { $ } from "../../core/dom";
 
 export class Formula extends ExcelComponent {
   static cn = "excel-formula";
@@ -6,7 +7,7 @@ export class Formula extends ExcelComponent {
   constructor($el, config = {}) {
     super($el, {
       name: "Formula",
-      listeners: ["input"],
+      listeners: ["keydown", "input"],
       ...config,
     });
   }
@@ -21,6 +22,27 @@ export class Formula extends ExcelComponent {
   }
 
   onInput(ev) {
-    this.emit(`${this.name}:Input`, ev.target.value);
+    this.emit(`${this.name}:Input`, $(ev.target).text());
+  }
+
+  onKeydown(ev) {
+    const keys = ["Enter", "Tab"];
+    if (keys.includes(ev.key)) {
+      ev.preventDefault();
+
+      this.emit(`${this.name}:InputDone`);
+    }
+  }
+
+  updateInputValue($cell) {
+    this.$el.find("input").text($cell.text());
+  }
+
+  init() {
+    super.init();
+    this.updateInputValue = this.updateInputValue.bind(this);
+
+    this.subscribe("Table:Select", this.updateInputValue);
+    this.subscribe("Table:Input", this.updateInputValue);
   }
 }

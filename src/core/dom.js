@@ -26,10 +26,18 @@ export class Dom {
     if (typeof text === "string") {
       this.$el.textContent = text;
 
+      if (this.$el.tagName.toLowerCase() === "input") {
+        this.$el.value = text;
+      }
+
       return this;
     }
 
-    return this.$el.textContent;
+    if (this.$el.tagName.toLowerCase() === "input") {
+      return this.$el.value.trim();
+    }
+
+    return this.$el.textContent.trim();
   }
 
   clear() {

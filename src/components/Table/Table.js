@@ -2,6 +2,7 @@ import { ExcelComponent } from "../../core/ExcelComponent";
 import { CHAR_CODES, createTable } from "./table.template";
 import { getNextCellSelector, resizeHandler } from "./table.helpers";
 import { TableSelection } from "./TableSelection";
+import { $ } from "../../core/dom";
 
 export class Table extends ExcelComponent {
   static cn = "excel-table";
@@ -11,7 +12,7 @@ export class Table extends ExcelComponent {
   constructor($el, config = {}) {
     super($el, {
       name: "Table",
-      listeners: ["mousedown", "keydown"],
+      listeners: ["mousedown", "keydown", "input"],
       ...config,
     });
   }
@@ -24,17 +25,23 @@ export class Table extends ExcelComponent {
     this.selection = new TableSelection();
   }
 
+  emitCellSelect($cell) {
+    this.emit(`${this.name}:Select`, $cell);
+  }
+
   init() {
     super.init();
     const $cell = this.$el.find('[data-id="0:0"]');
     this.selection.selectOne($cell);
+    this.emitCellSelect($cell);
 
-    this.onFormulaInput = this.onFormulaInput.bind(this);
-    this.subscribe("Formula:Input", this.onFormulaInput);
-  }
+    this.subscribe("Formula:Input", (value) => {
+      this.selection.current.text(value);
+    });
 
-  onFormulaInput(value) {
-    this.selection.current.text(value);
+    this.subscribe("Formula:InputDone", () => {
+      this.selection.current.focus();
+    });
   }
 
   onMousedown(ev) {
@@ -42,7 +49,12 @@ export class Table extends ExcelComponent {
       resizeHandler(ev, this.$el);
     } else if (ev.target.dataset.type === "cell") {
       this.selection.select(ev);
+      this.emitCellSelect($(ev.target));
     }
+  }
+
+  onInput(ev) {
+    this.emit(`${this.name}:Input`, $(ev.target));
   }
 
   onKeydown(ev) {
@@ -69,6 +81,7 @@ export class Table extends ExcelComponent {
       );
 
       this.selection.selectOne($next);
+      this.emitCellSelect($next);
     }
   }
 }

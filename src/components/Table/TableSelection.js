@@ -21,18 +21,23 @@ export class TableSelection {
     this.selectOne($(ev.target));
   }
 
+  scrollAndFocus($cell) {
+    $cell.scrollTo();
+    $cell.focus();
+  }
+
   selectOne($cell) {
     this.clear();
     this.group.push($cell);
     this.current = $cell;
     $cell.addClass(TableSelection.cn);
-    $cell.scrollTo();
+    this.scrollAndFocus($cell);
   }
 
   selectGroup($cell) {
-    $cell.scrollTo();
     this.current = $cell;
     this.group.push($cell);
     this.group.forEach(($el) => $el.addClass(TableSelection.cn));
+    this.scrollAndFocus($cell);
   }
 }
