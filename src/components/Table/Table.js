@@ -25,15 +25,15 @@ export class Table extends ExcelComponent {
     this.selection = new TableSelection();
   }
 
-  emitCellSelect($cell) {
+  selectCell($cell) {
     this.emit(`${this.name}:Select`, $cell);
+    this.selection.select($cell);
   }
 
   init() {
     super.init();
     const $cell = this.$el.find('[data-id="0:0"]');
-    this.selection.selectOne($cell);
-    this.emitCellSelect($cell);
+    this.selectCell($cell);
 
     this.subscribe("Formula:Input", (value) => {
       this.selection.current.text(value);
@@ -48,8 +48,7 @@ export class Table extends ExcelComponent {
     if (ev.target.dataset.resize) {
       resizeHandler(ev, this.$el);
     } else if (ev.target.dataset.type === "cell") {
-      this.selection.select(ev);
-      this.emitCellSelect($(ev.target));
+      this.selectCell($(ev.target));
     }
   }
 
@@ -80,8 +79,7 @@ export class Table extends ExcelComponent {
         })
       );
 
-      this.selection.selectOne($next);
-      this.emitCellSelect($next);
+      this.selectCell($next);
     }
   }
 }

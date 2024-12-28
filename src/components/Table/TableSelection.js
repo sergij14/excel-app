@@ -13,20 +13,12 @@ export class TableSelection {
     this.group = [];
   }
 
-  select(ev) {
-    if (ev.ctrlKey) {
-      return this.selectGroup($(ev.target));
-    }
-
-    this.selectOne($(ev.target));
-  }
-
   scrollAndFocus($cell) {
     $cell.scrollTo();
     $cell.focus();
   }
 
-  selectOne($cell) {
+  select($cell) {
     this.clear();
     this.group.push($cell);
     this.current = $cell;
