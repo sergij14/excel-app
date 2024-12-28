@@ -22,7 +22,7 @@
 
 @layer utilities {
   .cell {
-    @apply w-[120px] overflow-hidden border-t-transparent border-l-transparent border focus:selected-cell;
+    @apply w-[120px] border-t-transparent border-l-transparent border focus:selected-cell;
   }
   .col {
     @apply bg-gray-100 w-[120px] border-b border-r centered-cell relative;
@@ -34,13 +34,13 @@
     @apply flex justify-center items-center;
   }
   .resize {
-    @apply bg-blue-500 absolute opacity-0 hover:opacity-100;
+    @apply bg-blue-500 absolute opacity-0 hover:!opacity-100 z-10;
   }
   .resize-col {
-    @apply w-[4px] h-full top-0 bottom-0 right-0 hover:cursor-col-resize;
+    @apply w-[4px] top-0 bottom-0 right-0 hover:cursor-col-resize;
   }
   .resize-row {
-    @apply h-[4px] w-full bottom-0 hover:cursor-row-resize;
+    @apply h-[4px] bottom-0 left-0 right-0 hover:cursor-row-resize;
   }
   .selected-cell {
     @apply outline-none border border-blue-500;
