@@ -50,7 +50,7 @@ export class Table extends ExcelComponent {
     this.subscribe(
       "Store:StateUpdate",
       (data) => {
-        console.log("newState", data);
+        console.log("colState", data);
       },
       (state) => ({
         colState: state.table.colState,

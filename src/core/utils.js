@@ -9,3 +9,10 @@ export function clone(obj) {
 export function isEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
+
+export function storage(key, data) {
+  if (!data) {
+    return JSON.parse(localStorage.getItem(key));
+  }
+  localStorage.setItem(key, JSON.stringify(data));
+}

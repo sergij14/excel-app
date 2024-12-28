@@ -1,13 +1,20 @@
 import { $ } from "../core/dom";
 import { Emitter } from "../core/Emitter";
 import { Store } from "../core/Store";
+import { storage } from "../core/utils";
 
 export class Excel {
   constructor(selector, config) {
     this.$root = $(selector);
     this.components = config.components || [];
     this.emitter = new Emitter();
-    this.store = new Store(config.initialState, { emitter: this.emitter });
+    this.store = new Store(storage("excel-state") || config.initialState, {
+      emitter: this.emitter,
+    });
+
+    this.emitter.subscribe("Store:StateUpdate", (data) => {
+      storage("excel-state", data);
+    });
   }
 
   getContainer() {
