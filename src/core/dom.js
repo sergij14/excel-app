@@ -43,6 +43,18 @@ export class Dom {
     return this.$el.getBoundingClientRect();
   }
 
+  find(selector) {
+    return $(this.$el.querySelector(selector));
+  }
+
+  addClass(cn) {
+    this.$el.classList.add(cn);
+  }
+
+  removeClass(cn) {
+    this.$el.classList.remove(cn);
+  }
+
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }

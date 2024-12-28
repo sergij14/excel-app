@@ -3,9 +3,9 @@ const CHAR_CODES = {
   Z: 90,
 };
 
-function createCell(_, idx = "") {
+function createCell(rowIdx = "", colIdx = "") {
   return `
-    <div class="cell" data-col="${idx}" spellcheck="false" contenteditable>
+    <div class="cell" data-col="${colIdx}" data-id="${colIdx}:${rowIdx}" spellcheck="false" contenteditable>
     </div>
   `;
 }
@@ -50,9 +50,12 @@ export function createTable(rowsCount = 20) {
 
   rows.push(createRow(cols));
 
-  for (let i = 0; i < rowsCount; i++) {
-    const cells = new Array(colsCount).fill("").map(createCell).join("");
-    rows.push(createRow(cells, i + 1));
+  for (let rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
+    const cells = new Array(colsCount)
+      .fill("")
+      .map((_, colIdx) => createCell(rowIdx, colIdx))
+      .join("");
+    rows.push(createRow(cells, rowIdx + 1));
   }
 
   return rows.join("");

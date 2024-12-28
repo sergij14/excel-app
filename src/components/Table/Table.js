@@ -1,6 +1,7 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
 import { createTable } from "./table.template";
 import { resizeHandler } from "./table.helpers";
+import { TableSelection } from "./TableSelection";
 
 export class Table extends ExcelComponent {
   static cn = "excel-table";
@@ -16,9 +17,19 @@ export class Table extends ExcelComponent {
     return createTable();
   }
 
+  prepare() {
+    this.selection = new TableSelection();
+  }
+
+  init() {
+    super.init();
+    const $cell = this.$el.find('[data-id="0:0"]');
+    this.selection.select($cell);
+  }
+
   onMousedown(ev) {
     if (ev.target.dataset.resize) {
-      resizeHandler(ev, this.$el)
+      resizeHandler(ev, this.$el);
     }
   }
 }
