@@ -9,20 +9,18 @@ export function getNextCellSelector(key, { id, maxRow, maxCol }) {
 
   switch (key) {
     case "Enter":
-      break;
     case "Tab":
-      break;
     case "ArrowDown":
-      row = row + 1 >= maxRow ? 0 : row + 1;
+      row = +row + 1 >= maxRow ? maxRow - 1 : +row + 1;
       break;
     case "ArrowRight":
-      col = col + 1 >= maxCol ? 0 : col + 1;
+      col = +col + 1 >= maxCol ? maxCol - 1 : +col + 1;
       break;
     case "ArrowLeft":
-      col = col - 1 <= MIN ? maxCol - 1 : col - 1;
+      col = col - 1 <= MIN ? MIN : col - 1;
       break;
     case "ArrowUp":
-      row = row - 1 <= MIN ? maxRow - 1 : row - 1;
+      row = row - 1 <= MIN ? MIN : row - 1;
       break;
   }
 
