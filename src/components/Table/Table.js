@@ -8,11 +8,16 @@ export class Table extends ExcelComponent {
   static ROWS_COUNT = 20;
   static COLS_COUNT = CHAR_CODES.Z - CHAR_CODES.A + 1;
 
-  constructor($el) {
+  constructor($el, config = {}) {
     super($el, {
       name: "Table",
       listeners: ["mousedown", "keydown"],
+      ...config,
     });
+  }
+
+  onFormulaInput(value) {
+    console.log(value);
   }
 
   getHTML() {
@@ -27,6 +32,8 @@ export class Table extends ExcelComponent {
     super.init();
     const $cell = this.$el.find('[data-id="0:0"]');
     this.selection.selectOne($cell);
+
+    this.emitter.subscribe("Formula:Input", this.onFormulaInput);
   }
 
   onMousedown(ev) {

@@ -3,8 +3,8 @@ import { ExcelComponent } from "../../core/ExcelComponent";
 export class Header extends ExcelComponent {
   static cn = "excel-header";
 
-  constructor($el) {
-    super($el);
+  constructor($el, config = {}) {
+    super($el, { name: "Table", ...config });
   }
 
   getHTML() {

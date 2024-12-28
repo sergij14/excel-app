@@ -3,10 +3,11 @@ import { ExcelComponent } from "../../core/ExcelComponent";
 export class Formula extends ExcelComponent {
   static cn = "excel-formula";
 
-  constructor($el) {
+  constructor($el, config = {}) {
     super($el, {
       name: "Formula",
       listeners: ["input"],
+      ...config,
     });
   }
 
@@ -19,8 +20,7 @@ export class Formula extends ExcelComponent {
     `;
   }
 
-  onInput(ev){
-    console.log(ev.target.value);
-    
+  onInput(ev) {
+    this.emitter.emit(`${this.name}:Input`, ev.target.value);
   }
 }
