@@ -31,6 +31,7 @@ export class TableSelection {
 
   selectGroup($cell) {
     $cell.scrollTo();
+    this.current = $cell;
     this.group.push($cell);
     this.group.forEach(($el) => $el.addClass(TableSelection.cn));
   }

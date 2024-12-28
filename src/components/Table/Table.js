@@ -16,10 +16,6 @@ export class Table extends ExcelComponent {
     });
   }
 
-  onFormulaInput(value) {
-    console.log(value);
-  }
-
   getHTML() {
     return createTable(Table.ROWS_COUNT);
   }
@@ -33,7 +29,12 @@ export class Table extends ExcelComponent {
     const $cell = this.$el.find('[data-id="0:0"]');
     this.selection.selectOne($cell);
 
+    this.onFormulaInput = this.onFormulaInput.bind(this);
     this.emitter.subscribe("Formula:Input", this.onFormulaInput);
+  }
+
+  onFormulaInput(value) {
+    this.selection.current.text(value);
   }
 
   onMousedown(ev) {

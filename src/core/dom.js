@@ -22,6 +22,16 @@ export class Dom {
     });
   }
 
+  text(text) {
+    if (typeof text === "string") {
+      this.$el.textContent = text;
+
+      return this;
+    }
+
+    return this.$el.textContent;
+  }
+
   clear() {
     this.html("");
 
