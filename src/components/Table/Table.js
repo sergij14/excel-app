@@ -18,7 +18,7 @@ export class Table extends ExcelComponent {
   }
 
   getHTML() {
-    return createTable(Table.ROWS_COUNT);
+    return createTable(Table.ROWS_COUNT, this.store.getState().table);
   }
 
   prepare() {
@@ -36,7 +36,11 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init();
-    const $cell = this.$el.find('[data-id="0:0"]');
+    const cellIdFromState = this.store.getState().table.activeCell;
+    const $cell = this.$el.find(
+      `[data-id="${cellIdFromState ? cellIdFromState : "0:0"}"]`
+    );
+
     this.selectCell($cell);
 
     this.subscribe("Formula:Input", (value) => {
