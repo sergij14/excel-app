@@ -1,8 +1,9 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
-import { CHAR_CODES, createTable } from "./table.template";
+import { createTable } from "./table.template";
 import { getNextCellSelector, resizeHandler } from "./table.helpers";
 import { TableSelection } from "./TableSelection";
 import { $ } from "../../core/dom";
+import { CHAR_CODES } from "./table.constants";
 
 export class Table extends ExcelComponent {
   static cn = "excel-table";
@@ -50,23 +51,13 @@ export class Table extends ExcelComponent {
     this.subscribe("Formula:InputDone", () => {
       this.selection.current.focus();
     });
-
-    this.subscribe(
-      "Store:StateUpdate",
-      (data) => {
-        console.log("colState", data);
-      },
-      (state) => ({
-        colState: state.table.colState,
-      })
-    );
   }
 
   async resizeTable(ev) {
     try {
-      const { id, value } = await resizeHandler(ev, this.$el);
+      const { id, value, type } = await resizeHandler(ev, this.$el);
       const newState = this.store.getState();
-      newState.table.colState[id] = value;
+      newState.table[`${type}State`][id] = value;
 
       this.store.setState(newState);
     } catch (err) {

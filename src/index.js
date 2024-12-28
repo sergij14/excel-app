@@ -8,7 +8,7 @@ import { Toolbar } from "./components/Toolbar/Toolbar";
 
 const initialState = {
   toolbar: {},
-  table: { activeCell: "0:0", colState: {} },
+  table: { activeCell: "0:0", colState: {}, rowState: {}},
 };
 
 const app = new Excel("#app", {

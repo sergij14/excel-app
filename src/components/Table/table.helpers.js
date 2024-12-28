@@ -1,7 +1,5 @@
 import { $ } from "../../core/dom";
-
-const MIN_CELL_WIDTH = 40;
-const MIN_CELL_HEIGHT = 26;
+import { MIN_HEIGHT, MIN_WIDTH } from "./table.constants";
 
 export function getNextCellSelector(key, { id, maxRow, maxCol }) {
   const MIN = 0;
@@ -57,16 +55,16 @@ export function resizeHandler(ev, $el) {
       $resizer.css({ opacity: 0, bottom: 0, right: 0 });
 
       if (resizeType === "col") {
-        if (width < MIN_CELL_WIDTH) {
-          width = MIN_CELL_WIDTH;
+        if (width < MIN_WIDTH) {
+          width = MIN_WIDTH;
         }
 
         const $cells = $el.findAll(`[data-col="${$parent.dataset.col}"]`);
         $parent.css({ width: `${width}px` });
         $cells.forEach((el) => $(el).css({ width: `${width}px` }));
       } else {
-        if (height < MIN_CELL_HEIGHT) {
-          height = MIN_CELL_HEIGHT;
+        if (height < MIN_HEIGHT) {
+          height = MIN_HEIGHT;
         }
 
         $parent.css({ height: `${height}px` });
@@ -74,7 +72,8 @@ export function resizeHandler(ev, $el) {
 
       resolve({
         value: resizeType === "col" ? width : height,
-        id: resizeType === "col" ? $parent.dataset.col : null,
+        id: $parent.dataset[resizeType],
+        type: resizeType,
       });
     };
   });

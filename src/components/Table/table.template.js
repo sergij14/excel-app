@@ -1,9 +1,4 @@
-export const CHAR_CODES = {
-  A: 65,
-  Z: 90,
-};
-
-const DEFAULT_WIDTH = 120;
+import { CHAR_CODES, DEFAULT_WIDTH, MIN_HEIGHT } from "./table.constants";
 
 function createCell(rowIdx = "", colIdx = "", width = "") {
   return `
@@ -16,18 +11,18 @@ function createCell(rowIdx = "", colIdx = "", width = "") {
   `;
 }
 
-function createCol(col = "", idx = "", width = "") {
+function createCol(col = "", idx = "", width = "", height = "") {
   return `
-      <div class="col" data-type="resizable" data-col="${idx}" style="width: ${width}">
+      <div class="col" data-type="resizable" data-col="${idx}" style="width: ${width}; height: ${height}">
           ${col}
           <div class="resize resize-col" data-resize="col"></div>
       </div>
    `;
 }
 
-function createRow(row = "", idx = "") {
+function createRow(row = "", idx = "", height) {
   return `
-      <div class="inline-flex" data-type="resizable">
+      <div class="inline-flex" data-type="resizable" data-row="${idx}" style="height: ${height}">
           <div class="row">
               ${idx ? idx : "-"}
               ${
@@ -49,25 +44,39 @@ function getWidth(colState, idx) {
   return `${colState[idx] || DEFAULT_WIDTH}px`;
 }
 
-export function createTable(rowsCount = 20, { colState = {} }) {
+function getHeight(rowState, idx) {
+  return `${rowState[idx] || MIN_HEIGHT}px`;
+}
+
+function mapCol(colState) {
+  return (_, idx) => createCol(getChar(idx), idx, getWidth(colState, idx));
+}
+
+function mapCell(rowState, colState, rowIdx) {
+  return (_, colIdx) =>
+    createCell(
+      rowIdx,
+      colIdx,
+      getWidth(colState, colIdx),
+      getHeight(rowState, rowIdx)
+    );
+}
+
+export function createTable(rowsCount = 20, { colState = {}, rowState = {} }) {
   const colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1;
   const rows = [];
 
-  const cols = new Array(colsCount)
-    .fill("")
-    .map((_, idx) => createCol(getChar(idx), idx, getWidth(colState, idx)))
-    .join("");
+  const cols = new Array(colsCount).fill("").map(mapCol(colState)).join("");
 
   rows.push(createRow(cols));
 
   for (let rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
     const cells = new Array(colsCount)
       .fill("")
-      .map((_, colIdx) =>
-        createCell(rowIdx, colIdx, getWidth(colState, colIdx))
-      )
+      .map(mapCell(rowState, colState, rowIdx))
       .join("");
-    rows.push(createRow(cells, rowIdx + 1));
+
+    rows.push(createRow(cells, rowIdx + 1, getHeight(rowState, rowIdx + 1)));
   }
 
   return rows.join("");
