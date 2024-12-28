@@ -26,9 +26,11 @@ export class TableSelection {
     this.group.push($cell);
     this.current = $cell;
     $cell.addClass(TableSelection.cn);
+    $cell.scrollTo();
   }
 
   selectGroup($cell) {
+    $cell.scrollTo();
     this.group.push($cell);
     this.group.forEach(($el) => $el.addClass(TableSelection.cn));
   }

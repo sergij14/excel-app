@@ -55,6 +55,10 @@ export class Dom {
     this.$el.focus();
   }
 
+  scrollTo() {
+    this.$el.scrollIntoView({ block: "end", inline: "end" });
+  }
+
   removeClass(cn) {
     this.$el.classList.remove(cn);
   }
