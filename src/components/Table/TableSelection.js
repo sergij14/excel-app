@@ -1,14 +1,15 @@
 import { $ } from "../../core/dom";
 
 export class TableSelection {
-  static className = "selected-cell";
+  static cn = "selected-cell";
 
   constructor() {
     this.group = [];
+    this.current = null;
   }
 
   clear() {
-    this.group.forEach(($el) => $el.removeClass("selected-cell"));
+    this.group.forEach(($el) => $el.removeClass(TableSelection.cn));
     this.group = [];
   }
 
@@ -23,13 +24,12 @@ export class TableSelection {
   selectOne($cell) {
     this.clear();
     this.group.push($cell);
-    $cell.addClass("selected-cell");
-
-    $cell.focus();
+    this.current = $cell;
+    $cell.addClass(TableSelection.cn);
   }
 
   selectGroup($cell) {
     this.group.push($cell);
-    this.group.forEach(($el) => $el.addClass("selected-cell"));
+    this.group.forEach(($el) => $el.addClass(TableSelection.cn));
   }
 }

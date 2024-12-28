@@ -3,6 +3,32 @@ import { $ } from "../../core/dom";
 const MIN_CELL_WIDTH = 40;
 const MIN_CELL_HEIGHT = 26;
 
+export function getNextCellSelector(key, { id, maxRow, maxCol }) {
+  const MIN = 0;
+  let [col, row] = id;
+
+  switch (key) {
+    case "Enter":
+      break;
+    case "Tab":
+      break;
+    case "ArrowDown":
+      row = row + 1 >= maxRow ? 0 : row + 1;
+      break;
+    case "ArrowRight":
+      col = col + 1 >= maxCol ? 0 : col + 1;
+      break;
+    case "ArrowLeft":
+      col = col - 1 <= MIN ? maxCol - 1 : col - 1;
+      break;
+    case "ArrowUp":
+      row = row - 1 <= MIN ? maxRow - 1 : row - 1;
+      break;
+  }
+
+  return `[data-id="${col}:${row}"]`;
+}
+
 export function resizeHandler(ev, $el) {
   const $resizer = $(ev.target);
   const $parent = $resizer.closest('[data-type="resizable"');
