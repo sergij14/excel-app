@@ -5,7 +5,7 @@ const CHAR_CODES = {
 
 function createCell(rowIdx = "", colIdx = "") {
   return `
-    <div class="cell" data-col="${colIdx}" data-id="${colIdx}:${rowIdx}" spellcheck="false" contenteditable>
+    <div class="cell" data-type="cell" data-col="${colIdx}" data-id="${colIdx}:${rowIdx}" spellcheck="false" contenteditable>
     </div>
   `;
 }

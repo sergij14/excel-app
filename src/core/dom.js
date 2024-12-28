@@ -51,6 +51,10 @@ export class Dom {
     this.$el.classList.add(cn);
   }
 
+  focus() {
+    this.$el.focus();
+  }
+
   removeClass(cn) {
     this.$el.classList.remove(cn);
   }

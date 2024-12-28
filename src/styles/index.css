@@ -22,7 +22,7 @@
 
 @layer utilities {
   .cell {
-    @apply w-[120px] border-t-transparent border-l-transparent border focus:selected-cell;
+    @apply w-[120px] border-t-transparent border-l-transparent border focus:outline-none;
   }
   .col {
     @apply bg-gray-100 w-[120px] border-b border-r centered-cell relative;
