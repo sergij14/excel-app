@@ -5,7 +5,6 @@ import { Formula } from "./components/Formula/Formula";
 import { Header } from "./components/Header/Header";
 import { Table } from "./components/Table/Table";
 import { Toolbar } from "./components/Toolbar/Toolbar";
-import { DEFAULT_STYLES } from "./constants";
 
 const initialState = {
   toolbar: {},

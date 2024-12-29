@@ -1,7 +1,13 @@
-import { CHAR_CODES, DEFAULT_WIDTH, MIN_HEIGHT } from "../../constants";
+import {
+  CHAR_CODES,
+  DEFAULT_STYLES,
+  DEFAULT_WIDTH,
+  MIN_HEIGHT,
+} from "../../constants";
 import { camelcaseToDashed } from "../../core/utils";
 
-function getCellInlineStyles(styles) {
+function getCellInlineStyles(styles = {}) {
+  styles = { ...DEFAULT_STYLES, ...styles };
   return Object.keys(styles)
     .map((key) => {
       const dashedCaseKey = camelcaseToDashed(key);
