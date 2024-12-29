@@ -34,3 +34,17 @@ export function get(objectParam, pathStr) {
 export function camelcaseToDashed(str) {
   return str.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
 }
+
+export function debounce(fn, wait = 1000) {
+  let timeoutID = null;
+
+  return function (...args) {
+    clearTimeout(timeoutID);
+
+    timeoutID = setTimeout(() => {
+      timeoutID = null;
+
+      fn.apply(this, args);
+    }, wait);
+  };
+}

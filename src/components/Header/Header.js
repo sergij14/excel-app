@@ -1,11 +1,16 @@
 import { $ } from "../../core/dom";
 import { ExcelComponent } from "../../core/ExcelComponent";
+import { debounce } from "../../core/utils";
 
 export class Header extends ExcelComponent {
   static cn = "excel-header";
 
   constructor($el, config = {}) {
     super($el, { name: "Table", listeners: ["input"], ...config });
+  }
+
+  prepare() {
+    this.onInput = debounce(this.onInput, 300).bind(this);
   }
 
   getHTML() {
@@ -34,8 +39,6 @@ export class Header extends ExcelComponent {
 
   onInput(ev) {
     const $target = $(ev.target);
-    console.log($target.text());
-
     this.store.setStore((prev) => ({ ...prev, tableTitle: $target.text() }));
   }
 }

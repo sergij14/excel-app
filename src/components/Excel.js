@@ -1,7 +1,7 @@
 import { $ } from "../core/dom";
 import { Emitter } from "../core/Emitter";
 import { Store } from "../core/Store";
-import { storage } from "../core/utils";
+import { debounce, storage } from "../core/utils";
 
 export class Excel {
   constructor(selector, config) {
@@ -30,10 +30,14 @@ export class Excel {
     return $container;
   }
 
+  stateListener(data) {
+    storage("excel-state", data);
+    console.log(`State Update:`, data);
+  }
+
   syncStorage() {
-    this.emitter.subscribe("Store:StateUpdate", (data) => {
-      storage("excel-state", data);
-    });
+    this.stateListener = debounce(this.stateListener, 300).bind(this);
+    this.emitter.subscribe("Store:StateUpdate", this.stateListener);
   }
 
   render() {
