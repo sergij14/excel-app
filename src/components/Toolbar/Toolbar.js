@@ -13,14 +13,14 @@ export class Toolbar extends ExcelComponent {
     });
   }
 
-  getHTML() {
+  get template() {
     return createToolbar(this.state);
   }
 
-  reRender(newState) {
-    this.$el.html(createToolbar(newState));
+  getHTML() {
+    return this.template;
   }
-
+  
   prepare() {
     this.state = {
       textAlign: "left",

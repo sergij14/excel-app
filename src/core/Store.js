@@ -6,7 +6,7 @@ export class Store {
     this.emitter = config.emitter || null;
   }
 
-  getState() {
+  getStore() {
     return clone(this.state);
   }
 
@@ -26,7 +26,7 @@ export class Store {
     };
   }
 
-  setState(value) {
+  setStore(value) {
     const currState = clone(this.state);
     const nextState = clone(
       typeof value === "function" ? value(currState) : value

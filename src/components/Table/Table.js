@@ -19,7 +19,7 @@ export class Table extends ExcelComponent {
   }
 
   getHTML() {
-    return createTable(Table.ROWS_COUNT, this.store.getState());
+    return createTable(Table.ROWS_COUNT, this.store.getStore());
   }
 
   prepare() {
@@ -29,7 +29,7 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.emit(`${this.name}:Select`, $cell);
     this.selection.select($cell);
-    this.store.setState((prev) => ({
+    this.store.setStore((prev) => ({
       ...prev,
       activeCell: $cell.dataset.id,
     }));
@@ -37,7 +37,7 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init();
-    const { activeCell } = this.store.getState();
+    const { activeCell } = this.store.getStore();
     const $cell = this.$el.find(
       `[data-id="${activeCell ? activeCell : "0:0"}"]`
     );
@@ -58,10 +58,10 @@ export class Table extends ExcelComponent {
   async resizeTable(ev) {
     try {
       const { id, value, type } = await resizeHandler(ev, this.$el);
-      const newState = this.store.getState();
+      const newState = this.store.getStore();
       newState[`${type}State`][id] = value;
 
-      this.store.setState(newState);
+      this.store.setStore(newState);
     } catch (err) {
       console.warn("Table: resize error", err);
     }
@@ -76,11 +76,11 @@ export class Table extends ExcelComponent {
   }
 
   updateCellInStore(id, text) {
-    const newState = this.store.getState();
+    const newState = this.store.getStore();
     newState.currentText = text;
     newState.dataState[id] = text;
 
-    this.store.setState(newState);
+    this.store.setStore(newState);
   }
 
   onInput(ev) {
