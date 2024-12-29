@@ -27,9 +27,9 @@ export class Table extends ExcelComponent {
   }
 
   selectCell($cell, { group = false } = {}) {
-    this.emit(`${this.name}:Select`, $cell);
+    const currentStyles = $cell.getStyle(Object.keys(DEFAULT_STYLES));
 
-    console.log($cell.getStyle(Object.keys(DEFAULT_STYLES)));
+    this.emit(`${this.name}:Select`, { $cell, currentStyles });
 
     if (group) {
       return this.selection.selectGroup($cell);
@@ -54,6 +54,15 @@ export class Table extends ExcelComponent {
 
     this.subscribe("Toolbar:ApplyStyle", (value) => {
       this.selection.applyStyle(value);
+      this.selection.group.forEach(($cell) => {
+        const { id } = $cell.dataset;
+        const newState = this.store.getStore();
+        newState.dataStyles[id] = {
+          ...(newState.dataStyles[id] || {}),
+          ...value,
+        };
+        this.store.setStore(newState);
+      });
     });
   }
 

@@ -30,3 +30,7 @@ export function get(objectParam, pathStr) {
 
   return index === path.length ? object : undefined;
 }
+
+export function camelcaseToDashed(str) {
+  return str.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
+}

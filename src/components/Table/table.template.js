@@ -1,11 +1,27 @@
 import { CHAR_CODES, DEFAULT_WIDTH, MIN_HEIGHT } from "../../constants";
+import { camelcaseToDashed } from "../../core/utils";
 
-function createCell(value = "", rowIdx = "", colIdx = "", width = "") {
+function getCellInlineStyles(styles) {
+  return Object.keys(styles)
+    .map((key) => {
+      const dashedCaseKey = camelcaseToDashed(key);
+      return `${dashedCaseKey}: ${styles[key]}`;
+    })
+    .join("; ");
+}
+
+function createCell(
+  value = "",
+  rowIdx = "",
+  colIdx = "",
+  width = "",
+  styles = {}
+) {
   return `
     <divv
       class="cell" data-type="cell"
       data-col="${colIdx}" data-id="${rowIdx}:${colIdx}"
-      style="width: ${width}"
+      style="width: ${width}; ${getCellInlineStyles(styles)}"
       spellcheck="false" contenteditable
     >
       ${value}
@@ -50,46 +66,50 @@ function getHeight(rowState, idx) {
   return `${rowState[idx] || MIN_HEIGHT}px`;
 }
 
-function getCellValue(dataState, rowIdx, colIdx) {
-  return dataState[`${rowIdx}:${colIdx}`];
+function getCellData({ dataState, dataStyles }, rowIdx, colIdx) {
+  return {
+    value: dataState[`${rowIdx}:${colIdx}`],
+    styles: dataStyles[`${rowIdx}:${colIdx}`],
+  };
 }
 
 function mapCol(colState) {
   return (_, idx) => createCol(getChar(idx), idx, getWidth(colState, idx));
 }
 
-function mapCell(rowState, colState, dataState, rowIdx) {
+function mapCell({ colState, dataState, dataStyles }, rowIdx) {
   return (_, colIdx) => {
-    const cellValue = getCellValue(dataState, rowIdx, colIdx);
-
-    return createCell(
-      cellValue,
+    const { value, styles } = getCellData(
+      { dataState, dataStyles },
       rowIdx,
-      colIdx,
-      getWidth(colState, colIdx),
-      getHeight(rowState, rowIdx)
+      colIdx
     );
+    const cellWidth = getWidth(colState, colIdx);
+
+    return createCell(value, rowIdx, colIdx, cellWidth, styles);
   };
 }
 
-export function createTable(
-  rowsCount = 20,
-  { colState = {}, rowState = {}, dataState = {} }
-) {
+export function createTable(rowsCount = 20, state) {
   const colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1;
   const rows = [];
 
-  const cols = new Array(colsCount).fill("").map(mapCol(colState)).join("");
+  const cols = new Array(colsCount)
+    .fill("")
+    .map(mapCol(state.colState))
+    .join("");
 
   rows.push(createRow(cols));
 
   for (let rowIdx = 0; rowIdx < rowsCount; rowIdx++) {
     const cells = new Array(colsCount)
       .fill("")
-      .map(mapCell(rowState, colState, dataState, rowIdx))
+      .map(mapCell(state, rowIdx))
       .join("");
 
-    rows.push(createRow(cells, rowIdx + 1, getHeight(rowState, rowIdx + 1)));
+    rows.push(
+      createRow(cells, rowIdx + 1, getHeight(state.rowState, rowIdx + 1))
+    );
   }
 
   return rows.join("");

@@ -22,6 +22,13 @@ export class Toolbar extends ExcelStateComponent {
     return this.template;
   }
 
+  init() {
+    super.init();
+    this.subscribe("Table:Select", ({ currentStyles }) => {
+      this.setState({ ...currentStyles });
+    });
+  }
+
   prepare() {
     this.initState(DEFAULT_STYLES);
   }

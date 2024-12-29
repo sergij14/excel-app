@@ -50,7 +50,7 @@ export class Formula extends ExcelComponent {
       }
     );
 
-    this.subscribe("Table:Select", ($cell) =>
+    this.subscribe("Table:Select", ({ $cell }) =>
       this.updateInputValue($cell.text())
     );
   }
