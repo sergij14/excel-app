@@ -4,7 +4,7 @@ export class DomListener {
   constructor($el, listeners = []) {
     this.listeners = listeners;
     if (!$el) {
-      throw new Error("No $el is provided for DomListener");
+      throw new Error("DomListener: No $el is provided for DomListener");
     }
     this.$el = $el;
   }
@@ -13,9 +13,10 @@ export class DomListener {
     this.listeners.forEach((listener) => {
       const method = `on${capitalize(listener)}`;
       if (!this[method]) {
-        throw new Error(
-          `${method} is not implemented for ${this.name} Component`
+        console.warn(
+          `DomListener: ${method} method is not implemented for ${this.name} Component`
         );
+        return;
       }
 
       this[method] = this[method].bind(this);

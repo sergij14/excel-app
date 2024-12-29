@@ -13,8 +13,16 @@ export class Store {
   getEmitEvent(currState, nextState) {
     return {
       eventName: "Store:StateUpdate",
-      comparator: ({ path }) =>
-        !isEqual(get(currState, path), get(nextState, path)),
+      comparator: ({ path }) => {
+        const curr = get(currState, path);
+        const next = get(nextState, path);
+
+        if (curr === undefined || next === undefined) {
+          console.warn(`Store: Coudn't get state with the path ${path}`);
+        }
+
+        return !isEqual(curr, next);
+      },
     };
   }
 

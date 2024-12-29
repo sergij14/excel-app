@@ -69,7 +69,7 @@ export class Table extends ExcelComponent {
 
       this.store.setState(newState);
     } catch (err) {
-      console.warn("Resize error", err);
+      console.warn("Table: resize error", err);
     }
   }
 
