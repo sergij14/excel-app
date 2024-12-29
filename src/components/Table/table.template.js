@@ -1,4 +1,4 @@
-import { CHAR_CODES, DEFAULT_WIDTH, MIN_HEIGHT } from "./table.constants";
+import { CHAR_CODES, DEFAULT_WIDTH, MIN_HEIGHT } from "../../constants";
 
 function createCell(value = "", rowIdx = "", colIdx = "", width = "") {
   return `

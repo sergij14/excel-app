@@ -3,7 +3,7 @@ import { createTable } from "./table.template";
 import { getNextCellSelector, resizeHandler } from "./table.helpers";
 import { TableSelection } from "./TableSelection";
 import { $ } from "../../core/dom";
-import { CHAR_CODES } from "./table.constants";
+import { CHAR_CODES, DEFAULT_STYLES } from "../../constants";
 
 export class Table extends ExcelComponent {
   static cn = "excel-table";
@@ -29,6 +29,8 @@ export class Table extends ExcelComponent {
   selectCell($cell, { group = false } = {}) {
     this.emit(`${this.name}:Select`, $cell);
 
+    console.log($cell.getStyle(Object.keys(DEFAULT_STYLES)));
+
     if (group) {
       return this.selection.selectGroup($cell);
     }
@@ -48,6 +50,10 @@ export class Table extends ExcelComponent {
 
     this.subscribe("Formula:InputDone", () => {
       this.selection.current.focus();
+    });
+
+    this.subscribe("Toolbar:ApplyStyle", (value) => {
+      this.selection.applyStyle(value);
     });
   }
 

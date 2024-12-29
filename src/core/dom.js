@@ -22,6 +22,16 @@ export class Dom {
     });
   }
 
+  getStyle(keys) {
+    const styles = {}
+
+    keys.forEach((key) => {
+      styles[key] = this.$el.style[key];
+    }, {});
+
+    return styles
+  }
+
   text(text) {
     if (typeof text === "string") {
       this.$el.textContent = text;

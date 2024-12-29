@@ -1,5 +1,5 @@
 import { $ } from "../../core/dom";
-import { MIN_HEIGHT, MIN_WIDTH } from "./table.constants";
+import { MIN_HEIGHT, MIN_WIDTH } from "../../constants";
 
 export function getNextCellSelector(key, { id, maxRow, maxCol }) {
   const MIN = 0;
