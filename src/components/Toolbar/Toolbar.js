@@ -1,4 +1,6 @@
+import { $ } from "../../core/dom";
 import { ExcelComponent } from "../../core/ExcelComponent";
+import { createToolbar } from "./toolbar.template";
 
 export class Toolbar extends ExcelComponent {
   static cn = "excel-toolbar";
@@ -12,29 +14,13 @@ export class Toolbar extends ExcelComponent {
   }
 
   getHTML() {
-    return `
-    <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-    <i class="fa-solid fa-align-left"></i>
-  </button>
-  <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-    <i class="fa-solid fa-align-center"></i>
-  </button>
-  <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-    <i class="fa-solid fa-align-right"></i>
-  </button>
-  <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-    <i class="fa-solid fa-bold"></i>
-  </button>
-  <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-    <i class="fa-solid fa-italic"></i>
-  </button>
-  <button class="hover:bg-gray-200 px-2 py-1 rounded-md cursor-pointer">
-    <i class="fa-solid fa-underline"></i>
-  </button>
-    `;
+    return createToolbar();
   }
 
   onClick(ev) {
-    console.log(ev.target);
+    const $target = $(ev.target);
+    if ($target.dataset.type === "toolbar-btn") {
+      console.log($target.dataset);
+    }
   }
 }
