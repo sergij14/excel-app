@@ -7,7 +7,7 @@ export class Dom {
   }
 
   html(html) {
-    if (typeof html === "string") {
+    if (typeof html === "string" || typeof html === "number") {
       this.$el.innerHTML = html;
 
       return this;
@@ -22,18 +22,26 @@ export class Dom {
     });
   }
 
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    return this.$el.getAttribute(name);
+  }
+
   getStyle(keys) {
-    const styles = {}
+    const styles = {};
 
     keys.forEach((key) => {
       styles[key] = this.$el.style[key];
     }, {});
 
-    return styles
+    return styles;
   }
 
   text(text) {
-    if (typeof text === "string") {
+    if (typeof text === "string" || typeof text === "number") {
       this.$el.textContent = text;
 
       if (this.$el.tagName.toLowerCase() === "input") {

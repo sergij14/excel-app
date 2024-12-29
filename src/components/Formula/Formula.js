@@ -34,24 +34,20 @@ export class Formula extends ExcelComponent {
     }
   }
 
-  updateInputValue(text) {
-    this.$el.find("input").text(text);
-  }
-
   init() {
     super.init();
-    this.updateInputValue = this.updateInputValue.bind(this);
+    this.$formula = this.$el.find("input");
 
     this.subscribe(
       "Store:StateUpdate",
-      ({ currentText }) => this.updateInputValue(currentText),
+      ({ currentText }) => this.$formula.text(currentText),
       {
         path: "currentText",
       }
     );
 
-    this.subscribe("Table:Select", ({ $cell }) =>
-      this.updateInputValue($cell.text())
-    );
+    this.subscribe("Table:Select", ({ $cell }) => {
+      this.$formula.text($cell.attr("data-value"));
+    });
   }
 }

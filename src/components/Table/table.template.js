@@ -5,6 +5,7 @@ import {
   MIN_HEIGHT,
 } from "../../constants";
 import { camelcaseToDashed } from "../../core/utils";
+import { parse } from "./table.helpers";
 
 function getCellInlineStyles(styles = {}) {
   styles = { ...DEFAULT_STYLES, ...styles };
@@ -24,14 +25,14 @@ function createCell(
   styles = {}
 ) {
   return `
-    <divv
+    <div
       class="cell" data-type="cell"
-      data-col="${colIdx}" data-id="${rowIdx}:${colIdx}"
+      data-col="${colIdx}" data-id="${rowIdx}:${colIdx}" data-value="${value}"
       style="width: ${width}; ${getCellInlineStyles(styles)}"
       spellcheck="false" contenteditable
     >
-      ${value}
-    </divv>
+      ${parse(value)}
+    </div>
   `;
 }
 

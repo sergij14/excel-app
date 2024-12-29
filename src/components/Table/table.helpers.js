@@ -78,3 +78,15 @@ export function resizeHandler(ev, $el) {
     };
   });
 }
+
+export function parse(value = "") {
+  if (value.startsWith("=")) {
+    try {
+      return eval(value.slice(1));
+    } catch (err) {
+      console.warn("Error while parsing cell value:", err.message);
+      return value;
+    }
+  }
+  return value;
+}

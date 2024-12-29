@@ -1,6 +1,6 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
 import { createTable } from "./table.template";
-import { getNextCellSelector, resizeHandler } from "./table.helpers";
+import { getNextCellSelector, parse, resizeHandler } from "./table.helpers";
 import { TableSelection } from "./TableSelection";
 import { $ } from "../../core/dom";
 import { CHAR_CODES, DEFAULT_STYLES } from "../../constants";
@@ -43,7 +43,8 @@ export class Table extends ExcelComponent {
     this.selectCell($cell);
 
     this.subscribe("Formula:Input", (text) => {
-      this.selection.current.text(text);
+      this.selection.current.attr("data-value", text).text(parse(text));
+
       const { id } = this.selection.current.dataset;
       this.updateCellInStore(id, text);
     });
@@ -98,8 +99,11 @@ export class Table extends ExcelComponent {
   }
 
   onInput(ev) {
-    const text = $(ev.target).text();
-    const { id } = $(ev.target).dataset;
+    const $target = $(ev.target);
+    const text = $target.text();
+    $target.attr("data-value", text);
+    const { id } = $target.dataset;
+
     this.updateCellInStore(id, text);
   }
 
