@@ -1,4 +1,4 @@
-import './styles/index.css';
+import "./styles/index.css";
 
 import { Excel } from "./components/Excel";
 import { Formula } from "./components/Formula/Formula";
@@ -8,12 +8,16 @@ import { Toolbar } from "./components/Toolbar/Toolbar";
 
 const initialState = {
   toolbar: {},
-  table: { activeCell: "0:0", colState: {}, rowState: {}},
+  activeCell: "0:0",
+  colState: {},
+  rowState: {},
+  dataState: {},
+  currentText: "",
 };
 
 const app = new Excel("#app", {
   components: [Header, Toolbar, Formula, Table],
-  initialState
+  initialState,
 });
 
 app.render();

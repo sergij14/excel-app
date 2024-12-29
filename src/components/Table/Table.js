@@ -19,7 +19,7 @@ export class Table extends ExcelComponent {
   }
 
   getHTML() {
-    return createTable(Table.ROWS_COUNT, this.store.getState().table);
+    return createTable(Table.ROWS_COUNT, this.store.getState());
   }
 
   prepare() {
@@ -31,41 +31,35 @@ export class Table extends ExcelComponent {
     this.selection.select($cell);
     this.store.setState((prev) => ({
       ...prev,
-      table: { ...prev.table, activeCell: $cell.dataset.id },
+      activeCell: $cell.dataset.id,
     }));
   }
 
   init() {
     super.init();
-    const cellIdFromState = this.store.getState().table.activeCell;
+    const { activeCell } = this.store.getState();
     const $cell = this.$el.find(
-      `[data-id="${cellIdFromState ? cellIdFromState : "0:0"}"]`
+      `[data-id="${activeCell ? activeCell : "0:0"}"]`
     );
 
     this.selectCell($cell);
 
-    this.subscribe("Formula:Input", (value) => {
-      this.selection.current.text(value);
+    this.subscribe("Formula:Input", (text) => {
+      this.selection.current.text(text);
+      const { id } = this.selection.current.dataset;
+      this.updateCellInStore(id, text);
     });
 
     this.subscribe("Formula:InputDone", () => {
       this.selection.current.focus();
     });
-
-    this.subscribe(
-      "Store:StateUpdate",
-      (data) => {
-        console.log(data);
-      },
-      { path: "table.colState" }
-    );
   }
 
   async resizeTable(ev) {
     try {
       const { id, value, type } = await resizeHandler(ev, this.$el);
       const newState = this.store.getState();
-      newState.table[`${type}State`][id] = value;
+      newState[`${type}State`][id] = value;
 
       this.store.setState(newState);
     } catch (err) {
@@ -81,8 +75,18 @@ export class Table extends ExcelComponent {
     }
   }
 
+  updateCellInStore(id, text) {
+    const newState = this.store.getState();
+    newState.currentText = text;
+    newState.dataState[id] = text;
+
+    this.store.setState(newState);
+  }
+
   onInput(ev) {
-    this.emit(`${this.name}:Input`, $(ev.target));
+    const text = $(ev.target).text();
+    const { id } = $(ev.target).dataset;
+    this.updateCellInStore(id, text);
   }
 
   onKeydown(ev) {
