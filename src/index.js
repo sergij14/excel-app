@@ -8,7 +8,6 @@ import { Toolbar } from "./components/Toolbar/Toolbar";
 
 const initialState = {
   toolbar: {},
-  activeCell: "0:0",
   colState: {},
   rowState: {},
   dataState: {},

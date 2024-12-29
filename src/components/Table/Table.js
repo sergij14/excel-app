@@ -26,22 +26,18 @@ export class Table extends ExcelComponent {
     this.selection = new TableSelection();
   }
 
-  selectCell($cell) {
+  selectCell($cell, { group = false } = {}) {
     this.emit(`${this.name}:Select`, $cell);
+
+    if (group) {
+      return this.selection.selectGroup($cell);
+    }
     this.selection.select($cell);
-    this.store.setStore((prev) => ({
-      ...prev,
-      activeCell: $cell.dataset.id,
-    }));
   }
 
   init() {
     super.init();
-    const { activeCell } = this.store.getStore();
-    const $cell = this.$el.find(
-      `[data-id="${activeCell ? activeCell : "0:0"}"]`
-    );
-
+    const $cell = this.$el.find('[data-id="0:0"]');
     this.selectCell($cell);
 
     this.subscribe("Formula:Input", (text) => {
@@ -71,6 +67,9 @@ export class Table extends ExcelComponent {
     if (ev.target.dataset.resize) {
       this.resizeTable(ev);
     } else if (ev.target.dataset.type === "cell") {
+      if (ev.ctrlKey) {
+        return this.selectCell($(ev.target), { group: true });
+      }
       this.selectCell($(ev.target));
     }
   }
