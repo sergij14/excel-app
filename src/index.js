@@ -13,6 +13,7 @@ const initialState = {
   dataState: {},
   dataStyles: {},
   currentText: "",
+  tableTitle: "New Table",
 };
 
 const app = new Excel("#app", {
