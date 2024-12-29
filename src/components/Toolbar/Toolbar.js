@@ -14,13 +14,29 @@ export class Toolbar extends ExcelComponent {
   }
 
   getHTML() {
-    return createToolbar();
+    return createToolbar(this.state);
+  }
+
+  reRender(newState) {
+    this.$el.html(createToolbar(newState));
+  }
+
+  prepare() {
+    this.state = {
+      textAlign: "left",
+      fontWeight: "normal",
+      fontStyle: "normal",
+      textDecoration: "none",
+    };
   }
 
   onClick(ev) {
     const $target = $(ev.target);
     if ($target.dataset.type === "toolbar-btn") {
-      console.log($target.dataset);
+      const value = JSON.parse($target.dataset.value);
+
+      this.state = { ...this.state, ...value };
+      this.reRender(this.state);
     }
   }
 }

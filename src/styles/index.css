@@ -43,10 +43,7 @@
     @apply h-[4px] bottom-0 left-0 right-0 hover:cursor-row-resize;
   }
   .selected-cell {
-    @apply outline-none border border-blue-500;
-  }
-  .highlighted-cell {
-    @apply bg-gray-300;
+    @apply outline-none bg-gray-100 border border-blue-500;
   }
   .toolbar-btn {
     @apply hover:bg-gray-200 rounded-md px-2 py-1 cursor-pointer;
