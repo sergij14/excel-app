@@ -1,41 +1,30 @@
-import { clone, get, isEqual } from "./utils";
+import { clone } from './utils';
 
 export class Store {
-  constructor(initialState = {}, config = {}) {
+  constructor(initialState = {}) {
     this.state = initialState;
-    this.emitter = config.emitter || null;
+    this.listeners = [];
   }
 
   getStore() {
     return clone(this.state);
   }
 
-  getEmitEvent(currState, nextState) {
-    return {
-      eventName: "Store:StateUpdate",
-      comparator: ({ path }) => {
-        const curr = get(currState, path);
-        const next = get(nextState, path);
-
-        if (curr === undefined || next === undefined) {
-          console.warn(`Store: Coudn't get state with the path ${path}`);
-        }
-
-        return !isEqual(curr, next);
-      },
+  subscribe(fn) {
+    this.listeners.push(fn);
+    return () => {
+      this.listeners = this.listeners.filter((listener) => listener !== fn);
     };
   }
 
   setStore(value) {
     const currState = clone(this.state);
     const nextState = clone(
-      typeof value === "function" ? value(currState) : value
+      typeof value === 'function' ? value(currState) : value,
     );
 
-    if (this.emitter) {
-      this.emitter.emit(this.getEmitEvent(currState, nextState), nextState);
-    }
     this.state = nextState;
+    this.listeners.forEach((listener) => listener(this.state));
     return nextState;
   }
 }

@@ -4,13 +4,13 @@ export class Emitter {
     this.key = 0;
   }
 
-  subscribe(eventName, cb, metadata) {
+  subscribe(eventName, cb) {
     if (!Object.hasOwn(this.listeners, eventName)) {
       this.listeners[eventName] = {};
     }
 
     const listenerId = this.key;
-    this.listeners[eventName][listenerId] = { cb, metadata };
+    this.listeners[eventName][listenerId] = cb;
     this.key++;
 
     return () => {
@@ -18,27 +18,14 @@ export class Emitter {
     };
   }
 
-  emit(event, ...args) {
-    let eventName, comparator;
-
-    if (typeof event === "object") {
-      eventName = event.eventName;
-      comparator = event.comparator;
-    } else {
-      eventName = event;
-    }
-
+  emit(eventName, ...args) {
     if (!Object.hasOwn(this.listeners, eventName)) {
       return false;
     }
 
     const listeners = { ...this.listeners[eventName] };
 
-    Object.values(listeners).forEach(({ cb, metadata }) => {
-      if (metadata && !comparator?.(metadata)) {
-        return;
-      }
-
+    Object.values(listeners).forEach((cb) => {
       cb.apply(null, args);
     });
 

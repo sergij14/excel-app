@@ -8,6 +8,7 @@ export class Formula extends ExcelComponent {
     super($el, {
       name: "Formula",
       listeners: ["keydown", "input"],
+      storeSubscribedFields: ['currentTextdfhdf'],
       ...config,
     });
   }
@@ -19,6 +20,10 @@ export class Formula extends ExcelComponent {
       <input class="w-full px-2 focus:outline-none" type="text" />
     </div>
     `;
+  }
+
+  storeChanged({currentText}) {
+    this.$formula.text(currentText);
   }
 
   onInput(ev) {
@@ -37,15 +42,6 @@ export class Formula extends ExcelComponent {
   init() {
     super.init();
     this.$formula = this.$el.find("input");
-
-    this.subscribe(
-      "Store:StateUpdate",
-      ({ currentText }) => this.$formula.text(currentText),
-      {
-        path: "currentText",
-      }
-    );
-
     this.subscribe("Table:Select", ({ $cell }) => {
       this.$formula.text($cell.attr("data-value"));
     });

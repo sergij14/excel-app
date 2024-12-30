@@ -1,10 +1,11 @@
-import { DomListener } from "./DomListener";
+import { DomListener } from './DomListener';
 
 export class ExcelComponent extends DomListener {
   constructor($el, config = {}) {
     super($el, config.listeners);
-    this.name = config.name || "";
+    this.name = config.name || '';
     this.emitter = config.emitter || null;
+    this.storeSubscribedFields = config.storeSubscribedFields || [];
     this.store = config.store || null;
     this.unsubs = [];
 
@@ -12,7 +13,7 @@ export class ExcelComponent extends DomListener {
   }
 
   render() {
-    return "";
+    return '';
   }
 
   prepare() {}
@@ -25,6 +26,8 @@ export class ExcelComponent extends DomListener {
   emit(eventName, comparator, ...args) {
     this.emitter.emit(eventName, comparator, ...args);
   }
+
+  storeChanged() {}
 
   init() {
     this.initListeners();
