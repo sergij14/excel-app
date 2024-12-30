@@ -38,7 +38,7 @@ function createCell(
 
 function createCol(col = "", idx = "", width = "", height = "") {
   return `
-      <div class="col" data-type="resizable" data-col="${idx}" style="width: ${width}; height: ${height}">
+      <div class="col" is-col="${idx}" data-type="resizable" data-col="${idx}" style="width: ${width}; height: ${height}">
           ${col}
           <div class="resize resize-col" data-resize="col"></div>
       </div>

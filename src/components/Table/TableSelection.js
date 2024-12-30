@@ -1,5 +1,6 @@
 export class TableSelection {
-  static cn = "selected-cell";
+  static cellCn = "selected-cell";
+  static collCn = "selected-col";
 
   constructor() {
     this.group = [];
@@ -7,7 +8,10 @@ export class TableSelection {
   }
 
   clear() {
-    this.group.forEach(($el) => $el.removeClass(TableSelection.cn));
+    this.group.forEach(({ $cell, $col }) => {
+      $cell.removeClass(TableSelection.cellCn);
+      $col.removeClass(TableSelection.collCn);
+    });
     this.group = [];
   }
 
@@ -16,19 +20,21 @@ export class TableSelection {
     $cell.focus();
   }
 
-  select($cell) {
-    this.clear();
-    this.group.push($cell);
-    this.current = $cell;
-    $cell.addClass(TableSelection.cn);
-    this.scrollAndFocus($cell);
+  select(selection, shouldClear = true) {
+    if (shouldClear) this.clear();
+    this.current = selection;
+    this.group.push(selection);
+    this.scrollAndFocus(selection.$cell);
+    selection.$cell.addClass(TableSelection.cellCn);
+    selection.$col.addClass(TableSelection.collCn);
   }
 
-  selectGroup($cell) {
-    this.current = $cell;
-    this.group.push($cell);
-    this.group.forEach(($el) => $el.addClass(TableSelection.cn));
-    this.scrollAndFocus($cell);
+  selectGroup(selection) {
+    this.select(selection, false);
+    this.group.forEach(({ $cell, $col }) => {
+      $cell.addClass(TableSelection.cellCn);
+      $col.addClass(TableSelection.collCn);
+    });
   }
 
   applyStyle(style) {

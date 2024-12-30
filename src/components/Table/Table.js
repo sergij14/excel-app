@@ -31,10 +31,14 @@ export class Table extends ExcelComponent {
 
     this.emit(`${this.name}:Select`, { $cell, currentStyles });
 
+    const colId = $cell.attr("data-col");
+    const $col = this.$el.find(`[is-col="${colId}"]`);
+
+    const selection = {$cell, $col}
     if (group) {
-      return this.selection.selectGroup($cell);
+      return this.selection.selectGroup(selection);
     }
-    this.selection.select($cell);
+    this.selection.select(selection);
   }
 
   init() {
