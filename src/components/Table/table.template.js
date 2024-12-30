@@ -45,7 +45,7 @@ function createCol(col = "", idx = "", width = "", height = "") {
    `;
 }
 
-function createRow(row = "", idx = "", height='') {
+function createRow(row = "", idx = "", height = "") {
   return `
       <div class="inline-flex" data-type="resizable" data-row="${idx}" style="height: ${height}">
           <div class="row" data-is-row="${idx}">

@@ -27,9 +27,9 @@ export function getNextCellSelector(key, { id, maxRow, maxCol }) {
 
 export function resizeHandler(ev, $el) {
   return new Promise((resolve) => {
-
-    $el.addClass('hide-scroll')
+    $el.addClass("hide-scroll");
     const $resizer = $(ev.target);
+    const $tooltip = $.create("span", "size-tooltip");
     const $parent = $resizer.closest('[data-type="resizable"');
     const parentCoords = $parent.getCoords();
     const resizeType = $resizer.dataset.resize;
@@ -42,14 +42,21 @@ export function resizeHandler(ev, $el) {
     );
 
     document.onmousemove = (moveEv) => {
+      $resizer.append($tooltip);
       if (resizeType === "col") {
         const delta = moveEv.pageX - parentCoords.right;
-        width = parentCoords.width + delta;
+        const newWidth = parentCoords.width + delta;
+        width = newWidth < MIN_WIDTH ? MIN_WIDTH : newWidth;
+
         $resizer.css({ right: `${-delta}px` });
+        $tooltip.text(`Width: ${width}px`);
       } else {
         const delta = moveEv.pageY - parentCoords.bottom;
-        height = parentCoords.height + delta;
+        const newHeight = parentCoords.height + delta;
+        height = newHeight < MIN_HEIGHT ? MIN_HEIGHT : newHeight;
+
         $resizer.css({ bottom: `${-delta}px` });
+        $tooltip.text(`Weight: ${height}px`);
       }
     };
 
@@ -60,23 +67,17 @@ export function resizeHandler(ev, $el) {
       $resizer.css({ opacity: 0, bottom: 0, right: 0 });
 
       if (resizeType === "col") {
-        if (width < MIN_WIDTH) {
-          width = MIN_WIDTH;
-        }
         const $cells = $el.findAll(`[data-col="${$parent.dataset.col}"]`);
         $parent.css({ width: `${width}px` });
         $cells.forEach((el) => $(el).css({ width: `${width}px` }));
         $parent.removeClass("col-resize-boundary");
       } else {
-        if (height < MIN_HEIGHT) {
-          height = MIN_HEIGHT;
-        }
-
         $parent.css({ height: `${height}px` });
         $parent.removeClass("row-resize-boundary");
       }
 
-      $el.removeClass('hide-scroll')
+      $el.removeClass("hide-scroll");
+      $resizer.clear();
       resolve({
         value: resizeType === "col" ? width : height,
         id: $parent.dataset[resizeType],
