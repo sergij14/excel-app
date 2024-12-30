@@ -40,7 +40,7 @@ describe("Store", () => {
     expect(handler).toHaveBeenCalled();
   });
 
-  it("should unsubscribe on ", () => {
+  it("should unsubscribe on unsub call", () => {
     const unsub = store.subscribe(handler);
     unsub();
     store.setStore((prev) => ({ ...prev, tableTitle: "test" }));
