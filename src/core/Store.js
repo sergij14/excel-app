@@ -32,7 +32,9 @@ export class Store {
       typeof value === "function" ? value(currState) : value
     );
 
-    this.emitter.emit(this.getEmitEvent(currState, nextState), nextState);
+    if (this.emitter) {
+      this.emitter.emit(this.getEmitEvent(currState, nextState), nextState);
+    }
     this.state = nextState;
     return nextState;
   }
