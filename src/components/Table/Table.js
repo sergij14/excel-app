@@ -57,12 +57,16 @@ export class Table extends ExcelComponent {
       this.selection.applyStyle(value);
       this.selection.group.forEach(($cell) => {
         const { id } = $cell.dataset;
-        const newState = this.store.getStore();
-        newState.dataStyles[id] = {
-          ...(newState.dataStyles[id] || {}),
-          ...value,
-        };
-        this.store.setStore(newState);
+        this.store.setStore((prev) => ({
+          ...prev,
+          dataStyles: {
+            ...prev.dataStyles,
+            [id]: {
+              ...(prev.dataStyles[id] || {}),
+              ...value,
+            },
+          },
+        }));
       });
     });
   }
@@ -70,10 +74,15 @@ export class Table extends ExcelComponent {
   async resizeTable(ev) {
     try {
       const { id, value, type } = await resizeHandler(ev, this.$el);
-      const newState = this.store.getStore();
-      newState[`${type}State`][id] = value;
+      const stateStype = [`${type}State`];
 
-      this.store.setStore(newState);
+      this.store.setStore((prev) => ({
+        ...prev,
+        [stateStype]: {
+          ...prev[stateStype],
+          [id]: value,
+        },
+      }));
     } catch (err) {
       console.warn("Table: resize error", err);
     }
@@ -91,11 +100,11 @@ export class Table extends ExcelComponent {
   }
 
   updateCellInStore(id, text) {
-    const newState = this.store.getStore();
-    newState.currentText = text;
-    newState.dataState[id] = text;
-
-    this.store.setStore(newState);
+    this.store.setStore((prev) => ({
+      ...prev,
+      currentText: text,
+      dataState: { ...prev.dataState, [id]: text },
+    }));
   }
 
   onInput(ev) {
