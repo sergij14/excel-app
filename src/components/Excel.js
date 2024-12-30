@@ -1,6 +1,7 @@
 import { $ } from "../core/dom";
 import { Emitter } from "../core/Emitter";
 import { Store } from "../core/Store";
+import { StoreSubscriber } from "../core/StoreSubscriber";
 import { debounce, storage } from "../core/utils";
 
 export class Excel {
@@ -8,10 +9,8 @@ export class Excel {
     this.$root = $(selector);
     this.components = config.components || [];
     this.emitter = new Emitter();
-    this.store = new Store(storage("excel-state") || config.initialState, {
-      emitter: this.emitter,
-    });
-    this.syncStorage();
+    this.store = new Store(storage("excel-state") || config.initialState);
+    this.storeSubscriber = new StoreSubscriber(this.store);
   }
 
   getContainer() {
@@ -30,18 +29,18 @@ export class Excel {
     return $container;
   }
 
-  stateListener(data) {
+  storeListener(data) {
     storage("excel-state", data);
     console.log(`State Update:`, data);
   }
 
-  syncStorage() {
-    this.stateListener = debounce(this.stateListener, 300).bind(this);
-    this.emitter.subscribe("Store:StateUpdate", this.stateListener);
-  }
-
   render() {
     this.$root.append(this.getContainer());
+    this.storeSubscriber.subscribeComponents(this.components);
+
+    this.storeListener = debounce(this.storeListener, 300).bind(this);
+    this.store.subscribe(this.storeListener);
+
     this.components.forEach((component) => {
       component.init();
     });
@@ -51,5 +50,6 @@ export class Excel {
     this.components.forEach((component) => {
       component.destory();
     });
+    this.storeSubscriber.unsubscribe();
   }
 }
