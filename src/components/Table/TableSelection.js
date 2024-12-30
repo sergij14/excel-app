@@ -1,17 +1,24 @@
 export class TableSelection {
   static cellCn = "selected-cell";
-  static collCn = "selected-col";
+  static rowColCn = "selected-row-col";
 
   constructor() {
     this.group = [];
     this.current = null;
   }
 
-  clear() {
-    this.group.forEach(({ $cell, $col }) => {
-      $cell.removeClass(TableSelection.cellCn);
-      $col.removeClass(TableSelection.collCn);
+  toggleCn(selection, type) {
+    const method = `${type}Class`;
+
+    Object.keys(selection).forEach((key) => {
+      selection[key][method](
+        key === "$cell" ? TableSelection.cellCn : TableSelection.rowColCn
+      );
     });
+  }
+
+  clear() {
+    this.group.forEach((selection) => this.toggleCn(selection, "remove"));
     this.group = [];
   }
 
@@ -25,19 +32,15 @@ export class TableSelection {
     this.current = selection;
     this.group.push(selection);
     this.scrollAndFocus(selection.$cell);
-    selection.$cell.addClass(TableSelection.cellCn);
-    selection.$col.addClass(TableSelection.collCn);
+    this.toggleCn(selection, "add");
   }
 
   selectGroup(selection) {
     this.select(selection, false);
-    this.group.forEach(({ $cell, $col }) => {
-      $cell.addClass(TableSelection.cellCn);
-      $col.addClass(TableSelection.collCn);
-    });
+    this.group.forEach((selection) => this.toggleCn(selection, "add"));
   }
 
   applyStyle(style) {
-    this.group.forEach(($el) => $el.css(style));
+    this.group.forEach(({ $cell }) => $cell.css(style));
   }
 }

@@ -32,9 +32,13 @@ export class Table extends ExcelComponent {
     this.emit(`${this.name}:Select`, { $cell, currentStyles });
 
     const colId = $cell.attr("data-col");
-    const $col = this.$el.find(`[is-col="${colId}"]`);
+    const rowId = parseInt($cell.attr("data-row")) + 1;
+    
+    const $col = this.$el.find(`[data-is-col="${colId}"]`);
+    const $row = this.$el.find(`[data-is-row="${rowId}"]`);
 
-    const selection = {$cell, $col}
+    const selection = {$cell, $col, $row};
+
     if (group) {
       return this.selection.selectGroup(selection);
     }
@@ -59,7 +63,7 @@ export class Table extends ExcelComponent {
 
     this.subscribe("Toolbar:ApplyStyle", (value) => {
       this.selection.applyStyle(value);
-      this.selection.group.forEach(($cell) => {
+      this.selection.group.forEach(({$cell}) => {
         const { id } = $cell.dataset;
         this.store.setStore((prev) => ({
           ...prev,

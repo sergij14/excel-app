@@ -27,7 +27,7 @@ function createCell(
   return `
     <div
       class="cell" data-type="cell"
-      data-col="${colIdx}" data-id="${rowIdx}:${colIdx}" data-value="${value}"
+      data-col="${colIdx}" data-row="${rowIdx}" data-id="${rowIdx}:${colIdx}" data-value="${value}"
       style="width: ${width}; ${getCellInlineStyles(styles)}"
       spellcheck="false" contenteditable
     >
@@ -38,7 +38,7 @@ function createCell(
 
 function createCol(col = "", idx = "", width = "", height = "") {
   return `
-      <div class="col" is-col="${idx}" data-type="resizable" data-col="${idx}" style="width: ${width}; height: ${height}">
+      <div class="col" data-is-col="${idx}" data-type="resizable" data-col="${idx}" style="width: ${width}; height: ${height}">
           ${col}
           <div class="resize resize-col" data-resize="col"></div>
       </div>
@@ -48,7 +48,7 @@ function createCol(col = "", idx = "", width = "", height = "") {
 function createRow(row = "", idx = "", height) {
   return `
       <div class="inline-flex" data-type="resizable" data-row="${idx}" style="height: ${height}">
-          <div class="row">
+          <div class="row" data-is-row="${idx}">
               ${idx ? idx : "-"}
               ${
                 idx
