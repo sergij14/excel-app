@@ -47,14 +47,14 @@ export class Table extends ExcelComponent {
     this.selectCell($cell);
 
     this.subscribe("Formula:Input", (text) => {
-      this.selection.current.attr("data-value", text).text(parse(text));
+      this.selection.current.$cell.attr("data-value", text).text(parse(text));
 
-      const { id } = this.selection.current.dataset;
+      const { id } = this.selection.current.$cell.dataset;
       this.updateCellInStore(id, text);
     });
 
     this.subscribe("Formula:InputDone", () => {
-      this.selection.current.focus();
+      this.selection.current.$cell.focus();
     });
 
     this.subscribe("Toolbar:ApplyStyle", (value) => {
@@ -133,7 +133,7 @@ export class Table extends ExcelComponent {
 
     if (keys.includes(key)) {
       ev.preventDefault();
-      const id = this.selection.current.dataset.id.split(":").map(Number);
+      const id = this.selection.current.$cell.dataset.id.split(":").map(Number);
 
       const $next = this.$el.find(
         getNextCellSelector(key, {
