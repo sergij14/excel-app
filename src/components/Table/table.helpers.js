@@ -27,6 +27,8 @@ export function getNextCellSelector(key, { id, maxRow, maxCol }) {
 
 export function resizeHandler(ev, $el) {
   return new Promise((resolve) => {
+
+    $el.addClass('hide-scroll')
     const $resizer = $(ev.target);
     const $parent = $resizer.closest('[data-type="resizable"');
     const parentCoords = $parent.getCoords();
@@ -74,6 +76,7 @@ export function resizeHandler(ev, $el) {
         $parent.removeClass("row-resize-boundary");
       }
 
+      $el.removeClass('hide-scroll')
       resolve({
         value: resizeType === "col" ? width : height,
         id: $parent.dataset[resizeType],

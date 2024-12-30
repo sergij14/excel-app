@@ -25,10 +25,10 @@
     @apply border-t-transparent border-l-transparent border focus:outline-none overflow-hidden;
   }
   .col {
-    @apply bg-gray-100 border-b border-r centered-cell relative;
+    @apply bg-gray-100 border-b border-r centered-cell relative select-none;
   }
   .row {
-    @apply w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow relative;
+    @apply w-[60px] bg-gray-100 border-b border-r centered-cell flex-grow relative select-none;
   }
   .centered-cell {
     @apply flex justify-center items-center;
@@ -37,27 +37,27 @@
     @apply bg-gray-500 absolute opacity-0 hover:!opacity-100 z-10;
   }
   .resize-col {
-    @apply w-[2px] top-0 bottom-0 right-0 hover:cursor-col-resize;
+    @apply w-[4px] top-0 bottom-0 right-0 hover:cursor-col-resize;
   }
   .resize-row {
-    @apply h-[2px] bottom-0 left-0 right-0 hover:cursor-row-resize;
+    @apply h-[4px] bottom-0 left-0 right-0 hover:cursor-row-resize;
   }
   .selected-cell {
     @apply outline-none bg-gray-100 border;
   }
-  .col-resize-boundary {
-    @apply relative;
-  }
   .col-resize-boundary::after {
-    @apply absolute top-0 left-0 bottom-[-5000px] z-10 bg-gray-500 w-[2px];
+    @apply absolute top-0 left-0 bottom-[-5000px] z-10 bg-gray-500 w-[4px];
     content:"";
   }
   .row-resize-boundary {
     @apply relative;
   }
   .row-resize-boundary::after {
-    @apply absolute top-0 h-[2px] left-0 right-[-5000px] z-10 bg-gray-500 w-auto;
+    @apply absolute top-0 h-[4px] left-0 right-[-5000px] z-10 bg-gray-500 w-auto;
     content:"";
+  }
+  .hide-scroll {
+    @apply overflow-hidden;
   }
   .selected-row-col {
     @apply outline-none bg-gray-300;
