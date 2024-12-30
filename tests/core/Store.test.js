@@ -7,17 +7,18 @@ const initialState = {
 
 describe("Store", () => {
   let store;
-  let emitter;
+  let handler;
 
   beforeEach(() => {
-    emitter = vi.fn();
-    store = new Store(initialState, { emitter: { emit: emitter } });
+    handler = vi.fn();
+    store = new Store(initialState);
   });
 
   it("creates store object", () => {
     expect(store).toBeDefined();
-    expect(store.emitter).toBeDefined();
-    expect(store.state).toBeDefined();
+    expect(store.getStore).toBeDefined();
+    expect(store.setStore).toBeDefined();
+    expect(store.subscribe).toBeDefined();
   });
 
   it("should return object", () => {
@@ -33,8 +34,16 @@ describe("Store", () => {
     expect(store.getStore().tableTitle).toBe("test");
   });
 
-  it("should call emitter function", () => {
+  it("should call subscriber function", () => {
+    store.subscribe(handler);
     store.setStore((prev) => ({ ...prev, tableTitle: "test" }));
-    expect(emitter).toHaveBeenCalled();
+    expect(handler).toHaveBeenCalled();
+  });
+
+  it("should unsubscribe on ", () => {
+    const unsub = store.subscribe(handler);
+    unsub();
+    store.setStore((prev) => ({ ...prev, tableTitle: "test" }));
+    expect(handler).not.toHaveBeenCalled();
   });
 });
