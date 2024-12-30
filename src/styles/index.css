@@ -4,7 +4,7 @@
 
 @layer components {
   .excel {
-    @apply border-2 border-gray-300 max-w-[1400px] mx-auto m-4;
+    @apply border-2 border-gray-300 max-w-[1400px] mx-auto;
   }
   .excel-header {
     @apply flex justify-between p-2 border-b-2 border-gray-300;
@@ -34,16 +34,30 @@
     @apply flex justify-center items-center;
   }
   .resize {
-    @apply bg-blue-500 absolute opacity-0 hover:!opacity-100 z-10;
+    @apply bg-gray-500 absolute opacity-0 hover:!opacity-100 z-10;
   }
   .resize-col {
-    @apply w-[4px] top-0 bottom-0 right-0 hover:cursor-col-resize;
+    @apply w-[2px] top-0 bottom-0 right-0 hover:cursor-col-resize;
   }
   .resize-row {
-    @apply h-[4px] bottom-0 left-0 right-0 hover:cursor-row-resize;
+    @apply h-[2px] bottom-0 left-0 right-0 hover:cursor-row-resize;
   }
   .selected-cell {
-    @apply outline-none bg-gray-100 border border-blue-500;
+    @apply outline-none bg-gray-100 border;
+  }
+  .col-resize-boundary {
+    @apply relative;
+  }
+  .col-resize-boundary::after {
+    @apply absolute top-0 left-0 bottom-[-5000px] z-10 bg-gray-500 w-[2px];
+    content:"";
+  }
+  .row-resize-boundary {
+    @apply relative;
+  }
+  .row-resize-boundary::after {
+    @apply absolute top-0 h-[2px] left-0 right-[-5000px] z-10 bg-gray-500 w-auto;
+    content:"";
   }
   .selected-row-col {
     @apply outline-none bg-gray-300;

@@ -35,6 +35,9 @@ export function resizeHandler(ev, $el) {
 
     let width, height;
     $resizer.css({ opacity: 1, [sideProp]: "-5000px" });
+    $parent.addClass(
+      resizeType === "col" ? "col-resize-boundary" : "row-resize-boundary"
+    );
 
     document.onmousemove = (moveEv) => {
       if (resizeType === "col") {
@@ -58,16 +61,17 @@ export function resizeHandler(ev, $el) {
         if (width < MIN_WIDTH) {
           width = MIN_WIDTH;
         }
-
         const $cells = $el.findAll(`[data-col="${$parent.dataset.col}"]`);
         $parent.css({ width: `${width}px` });
         $cells.forEach((el) => $(el).css({ width: `${width}px` }));
+        $parent.removeClass("col-resize-boundary");
       } else {
         if (height < MIN_HEIGHT) {
           height = MIN_HEIGHT;
         }
 
         $parent.css({ height: `${height}px` });
+        $parent.removeClass("row-resize-boundary");
       }
 
       resolve({

@@ -16,6 +16,11 @@ export class Dom {
     return this.$el.outerHTML.trim();
   }
 
+  insertHTML(html) {
+    this.$el.insertAdjacentHTML("afterbegin", html);
+    return this;
+  }
+
   css(styles = {}) {
     Object.keys(styles).forEach((key) => {
       this.$el.style[key] = styles[key];
