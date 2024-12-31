@@ -1,11 +1,13 @@
 import { Page } from "../core/Router/Page";
 import { $ } from "../core/DOM/dom";
 
-function createRecord(record) {
+function createRecord(key) {
+  const { date, tableTitle } = JSON.parse(localStorage.getItem(key));
+  const timestamp = key.split(":")[1];
   return `
         <li class="dashboard-list-item">
-          <a href="#">Table 2</a>
-          <span>12.06.2020</span>
+          <a href="#excel/${timestamp}">${tableTitle}</a>
+          <span class="min-w-max">${date}</span>
         </li>
   `;
 }
@@ -13,7 +15,10 @@ function createRecord(record) {
 function createRecordsTable() {
   const keys = getAllKeys();
 
-  if(!keys.length) return `<p class="dashboard-list">There are no tables created</p>`
+  if (!keys.length) {
+    return `<p class="dashboard-list">There are no tables created</p>`;
+  }
+
   return `
     <div class="dashboard-list">
       <div class="dashboard-list-header">

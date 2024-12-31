@@ -1,6 +1,6 @@
 import { $ } from "../../core/DOM/dom";
 
-const activeRoute = {
+export const activeRoute = {
   getPath() {
     return window.location.hash.slice(1);
   },
@@ -62,6 +62,10 @@ export class Router {
     }
 
     const Page = this.getPage();
+    if (!Page) {
+      return activeRoute.navigate("/");
+    }
+
     this.page = new Page(activeRoute.getParams());
 
     this.$placeholder.clear().append(this.page.getContainer());
