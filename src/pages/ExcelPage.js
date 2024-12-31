@@ -17,16 +17,21 @@ const initialState = {
   tableTitle: "New Table",
 };
 
+function getStorageName(id) {
+  if (!id) id = new Date().getTime();
+  return `excel:${id}`;
+}
+
 export class ExcelPage extends Page {
   storeListener(data) {
-    storage("excel-state", data);
+    storage(getStorageName(this.params.list[0]), data);
     console.log(`State Update:`, data);
   }
 
   getContainer() {
-    console.log(this.params);
-
-    this.store = new Store(storage("excel-state") || initialState);
+    this.store = new Store(
+      storage(getStorageName(this.params.list[0])) || initialState
+    );
 
     this.storeListener = debounce(this.storeListener, 300).bind(this);
     this.store.subscribe(this.storeListener);

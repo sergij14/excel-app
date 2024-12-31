@@ -12,9 +12,8 @@ function createRecord(record) {
 
 function createRecordsTable() {
   const keys = getAllKeys();
-  console.log(keys);
-  
 
+  if(!keys.length) return `<p class="dashboard-list">There are no tables created</p>`
   return `
     <div class="dashboard-list">
       <div class="dashboard-list-header">

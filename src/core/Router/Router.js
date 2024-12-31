@@ -6,7 +6,8 @@ const activeRoute = {
   },
 
   getParams() {
-    return this.getPath().split("/");
+    const [path, ...list] = this.getPath().split("/");
+    return { path, list };
   },
 
   navigate(path) {
@@ -35,7 +36,9 @@ export class Router {
   }
 
   getPage() {
-    const pagePath = activeRoute.getParams()[0] ? activeRoute.getParams()[0] : "/";
+    const pagePath = activeRoute.getParams().path
+      ? activeRoute.getParams().path
+      : "/";
 
     const pageItem = this.routes.find(({ path }) => {
       if (Array.isArray(path)) {
