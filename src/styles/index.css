@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+}
+
+body {
+  @apply min-h-full flex flex-col;
+}
+
 @layer components {
+  #app {
+    @apply flex flex-col flex-grow;
+  }
   .dashboard {
     @apply py-4;
   }
@@ -34,7 +45,7 @@
     @apply hover:underline w-full;
   }
   .excel {
-    @apply border-2 border-gray-300 max-w-[1400px] mx-auto;
+    @apply border-2 border-gray-300 w-full mx-auto flex flex-col flex-grow;
   }
   .excel-header {
     @apply flex justify-between p-2 border-b-2 border-gray-300;
@@ -46,7 +57,7 @@
     @apply flex border-b-2 border-gray-300;
   }
   .excel-table {
-    @apply overflow-x-auto;
+    @apply overflow-x-auto flex-grow;
   }
 }
 
