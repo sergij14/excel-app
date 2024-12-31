@@ -1,7 +1,7 @@
-import { ExcelComponent } from "../../core/ExcelComponent";
-import { $ } from "../../core/dom";
+import { AppComponent } from "../../core/AppComponent/AppComponent";
+import { $ } from "../../core/DOM/dom";
 
-export class Formula extends ExcelComponent {
+export class Formula extends AppComponent {
   static cn = "excel-formula";
 
   constructor($el, config = {}) {

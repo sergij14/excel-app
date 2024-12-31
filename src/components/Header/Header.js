@@ -1,8 +1,8 @@
-import { $ } from "../../core/dom";
-import { ExcelComponent } from "../../core/ExcelComponent";
+import { AppComponent } from "../../core/AppComponent/AppComponent";
+import { $ } from "../../core/DOM/dom";
 import { debounce } from "../../core/utils";
 
-export class Header extends ExcelComponent {
+export class Header extends AppComponent {
   static cn = "excel-header";
 
   constructor($el, config = {}) {

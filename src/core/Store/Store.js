@@ -1,4 +1,4 @@
-import { clone } from "./utils";
+import { clone } from "../utils";
 
 export class Store {
   constructor(initialState = {}) {

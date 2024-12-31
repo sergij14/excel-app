@@ -1,11 +1,11 @@
-import { ExcelComponent } from "../../core/ExcelComponent";
 import { createTable } from "./table.template";
 import { getNextCellSelector, parse, resizeHandler } from "./table.helpers";
 import { TableSelection } from "./TableSelection";
-import { $ } from "../../core/dom";
+import { $ } from "../../core/DOM/dom";
 import { CHAR_CODES, DEFAULT_STYLES } from "../../constants";
+import { AppComponent } from "../../core/AppComponent/AppComponent";
 
-export class Table extends ExcelComponent {
+export class Table extends AppComponent {
   static cn = "excel-table";
   static ROWS_COUNT = 20;
   static COLS_COUNT = CHAR_CODES.Z - CHAR_CODES.A + 1;

@@ -1,7 +1,7 @@
-import { $ } from "../core/dom";
-import { Emitter } from "../core/Emitter";
-import { Store } from "../core/Store";
-import { StoreSubscriber } from "../core/StoreSubscriber";
+import { $ } from "../core/DOM/dom";
+import { Emitter } from "../core/Emitter/Emitter";
+import { Store } from "../core/Store/Store";
+import { StoreSubscriber } from "../core/Store/StoreSubscriber";
 import { debounce, storage } from "../core/utils";
 
 export class Excel {

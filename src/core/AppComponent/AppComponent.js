@@ -1,6 +1,6 @@
-import { DomListener } from "./DomListener";
+import { DomListener } from "../DOM/DomListener";
 
-export class ExcelComponent extends DomListener {
+export class AppComponent extends DomListener {
   constructor($el, config = {}) {
     super($el, config.listeners);
     this.name = config.name || "";

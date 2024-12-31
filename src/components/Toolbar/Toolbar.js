@@ -1,9 +1,9 @@
 import { DEFAULT_STYLES } from "../../constants";
-import { $ } from "../../core/dom";
-import { ExcelStateComponent } from "../../core/ExcelStateComponent";
+import { AppStateComponent } from "../../core/AppComponent/AppStateComponent";
+import { $ } from "../../core/DOM/dom";
 import { createToolbar } from "./toolbar.template";
 
-export class Toolbar extends ExcelStateComponent {
+export class Toolbar extends AppStateComponent {
   static cn = "excel-toolbar";
 
   constructor($el, config = {}) {

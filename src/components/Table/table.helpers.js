@@ -1,4 +1,4 @@
-import { $ } from "../../core/dom";
+import { $ } from "../../core/DOM/dom";
 import { MIN_HEIGHT, MIN_WIDTH } from "../../constants";
 
 export function getNextCellSelector(key, { id, maxRow, maxCol }) {
