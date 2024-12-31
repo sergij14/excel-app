@@ -37,7 +37,7 @@ export class ExcelPage extends Page {
     this.store = new Store(storage(this.storageName) || initialState);
 
     this.storeListener = debounce(this.storeListener, 300).bind(this);
-    this.store.subscribe(this.storeListener);
+    this.storeUnsub = this.store.subscribe(this.storeListener);
 
     this.excel = new Excel({
       components: [Header, Toolbar, Formula, Table],
@@ -53,5 +53,6 @@ export class ExcelPage extends Page {
 
   destroy() {
     this.excel.destroy();
+    this.storeUnsub();
   }
 }
