@@ -35,9 +35,9 @@ export class Excel {
     });
   }
 
-  destory() {
+  destroy() {
     this.components.forEach((component) => {
-      component.destory();
+      component.destroy();
     });
     this.storeSubscriber.unsubscribe();
   }

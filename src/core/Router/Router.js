@@ -5,7 +5,7 @@ const activeRoute = {
     return window.location.hash.slice(1);
   },
 
-  getParam() {
+  getParams() {
     return this.getPath().split("/");
   },
 
@@ -22,6 +22,7 @@ export class Router {
 
     this.$placeholder = $(selector);
     this.routes = routes;
+    this.page = null;
 
     this.pageChangeHandler = this.pageChangeHandler.bind(this);
 
@@ -33,13 +34,36 @@ export class Router {
     this.pageChangeHandler();
   }
 
+  getPage() {
+    const pagePath = activeRoute.getParams()[0] ? activeRoute.getParams()[0] : "/";
+
+    const pageItem = this.routes.find(({ path }) => {
+      if (Array.isArray(path)) {
+        return path.includes(pagePath);
+      } else {
+        return path === pagePath;
+      }
+    });
+
+    if (!pageItem) {
+      console.warn(`Router: no page was found for ${pagePath}`);
+      return null;
+    }
+
+    return pageItem.element;
+  }
+
   pageChangeHandler() {
-    const Page = this.routes.excel;
-    const page = new Page();
+    if (this.page) {
+      this.page.destroy();
+    }
 
-    this.$placeholder.append(page.getContainer());
+    const Page = this.getPage();
+    this.page = new Page();
 
-    page.afterRender();
+    this.$placeholder.clear().append(this.page.getContainer());
+
+    this.page.afterRender();
   }
 
   destroy() {

@@ -46,6 +46,6 @@ export class ExcelPage extends Page {
   }
 
   destroy() {
-    this.excel.destory();
+    this.excel.destroy();
   }
 }
