@@ -1,15 +1,12 @@
 import { $ } from "../core/DOM/dom";
 import { Emitter } from "../core/Emitter/Emitter";
-import { Store } from "../core/Store/Store";
 import { StoreSubscriber } from "../core/Store/StoreSubscriber";
-import { debounce, storage } from "../core/utils";
 
 export class Excel {
-  constructor(selector, config) {
-    this.$root = $(selector);
+  constructor(config) {
     this.components = config.components || [];
     this.emitter = new Emitter();
-    this.store = new Store(storage("excel-state") || config.initialState);
+    this.store = config.store || null
     this.storeSubscriber = new StoreSubscriber(this.store);
   }
 
@@ -29,17 +26,9 @@ export class Excel {
     return $container;
   }
 
-  storeListener(data) {
-    storage("excel-state", data);
-    console.log(`State Update:`, data);
-  }
 
-  render() {
-    this.$root.append(this.getContainer());
+  init() {
     this.storeSubscriber.subscribeComponents(this.components);
-
-    this.storeListener = debounce(this.storeListener, 300).bind(this);
-    this.store.subscribe(this.storeListener);
 
     this.components.forEach((component) => {
       component.init();

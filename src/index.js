@@ -1,24 +1,9 @@
+import { Router } from "./core/Router/Router";
+import { DashboardPage } from "./pages/DashboardPage";
+import { ExcelPage } from "./pages/ExcelPage";
 import "./styles/index.css";
 
-import { Excel } from "./components/Excel";
-import { Formula } from "./components/Formula/Formula";
-import { Header } from "./components/Header/Header";
-import { Table } from "./components/Table/Table";
-import { Toolbar } from "./components/Toolbar/Toolbar";
-
-const initialState = {
-  toolbar: {},
-  colState: {},
-  rowState: {},
-  dataState: {},
-  dataStyles: {},
-  currentText: "",
-  tableTitle: "New Table",
-};
-
-const app = new Excel("#app", {
-  components: [Header, Toolbar, Formula, Table],
-  initialState,
+new Router("#app", {
+  dashboard: DashboardPage,
+  excel: ExcelPage,
 });
-
-app.render();
