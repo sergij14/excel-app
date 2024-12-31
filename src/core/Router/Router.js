@@ -59,7 +59,7 @@ export class Router {
     }
 
     const Page = this.getPage();
-    this.page = new Page();
+    this.page = new Page(activeRoute.getParams());
 
     this.$placeholder.clear().append(this.page.getContainer());
 

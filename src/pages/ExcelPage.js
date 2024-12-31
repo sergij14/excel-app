@@ -18,16 +18,14 @@ const initialState = {
 };
 
 export class ExcelPage extends Page {
-  constructor() {
-    super();
-  }
-
   storeListener(data) {
     storage("excel-state", data);
     console.log(`State Update:`, data);
   }
 
   getContainer() {
+    console.log(this.params);
+
     this.store = new Store(storage("excel-state") || initialState);
 
     this.storeListener = debounce(this.storeListener, 300).bind(this);
