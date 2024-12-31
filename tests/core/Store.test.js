@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { Store } from "../../src/core/Store";
+import { Store } from "../../src/core/Store/Store";
 
 const initialState = {
   tableTitle: "New Table",
