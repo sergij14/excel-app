@@ -12,7 +12,7 @@ export class AppComponent extends DomListener {
     this.prepare();
   }
 
-  render() {
+  getHTML() {
     return "";
   }
 
