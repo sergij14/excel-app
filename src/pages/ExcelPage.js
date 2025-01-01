@@ -40,7 +40,6 @@ export class ExcelPage extends Page {
       components: [Header, Toolbar, Formula, Table],
       store: this.store,
     });
-    console.log(this.excel);
 
     return this.excel.getContainer();
   }

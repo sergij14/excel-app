@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, } from "vitest";
 import { Router } from "../../src/core/Router/Router";
 import { Page } from "../../src/core/Router/Page";
 
@@ -40,29 +40,30 @@ describe("Router", () => {
     expect(router.pageChangeHandler).toBeDefined();
   });
 
-  it("renders default home page", () => {
+  it("renders default home page", async () => {
+    await router.pageChangeHandler();
     expect($app.innerHTML).toBe("<div>DashboardPage</div>");
   });
 
-  it("switches to excel page on hashchange", () => {
+  it("switches to excel page on hashchange", async () => {
     window.location.hash = "#excel/";
-    router.pageChangeHandler();
+    await router.pageChangeHandler();
     expect($app.innerHTML).toBe("<div>ExcelPage</div>");
   });
 
-  it("renders dashboard page", () => {
+  it("renders dashboard page", async() => {
     window.location.hash = "#/dashboard";
-    router.pageChangeHandler();
+    await router.pageChangeHandler();
     expect($app.innerHTML).toBe("<div>DashboardPage</div>");
   });
 
-  it("renders default home page when path doesn't exist", () => {
+  it("renders default home page when path doesn't exist", async () => {
     window.location.hash = "#excel/";
-    router.pageChangeHandler();
+    await router.pageChangeHandler();
     expect($app.innerHTML).toBe("<div>ExcelPage</div>");
 
     window.location.hash = "#/testpath";
-    router.pageChangeHandler();
+    await router.pageChangeHandler();
     expect($app.innerHTML).toBe("<div>DashboardPage</div>");
   });
 });
