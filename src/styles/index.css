@@ -118,4 +118,7 @@ body {
   .loader > * {
     @apply animate-spin;
   }
+  .error {
+    @apply text-xl text-center p-4 py-10 text-red-700 flex flex-col gap-4;
+  }
 }
