@@ -39,7 +39,7 @@ body {
     @apply flex flex-col gap-4;
   }
   .dashboard-list-item {
-    @apply flex justify-between hover:bg-gray-100 rounded-full px-4 py-2
+    @apply flex justify-between hover:bg-gray-100 rounded-full px-4 py-2;
   }
   .dashboard-list-item a {
     @apply hover:underline w-full;
@@ -111,5 +111,11 @@ body {
   }
   .header-btn {
     @apply bg-gray-100 hover:bg-gray-200 rounded-md px-4 py-2 cursor-pointer flex gap-2 items-center;
+  }
+  .loader {
+    @apply text-xl text-center p-4 py-10 text-green-700 flex flex-col gap-4;
+  }
+  .loader > * {
+    @apply animate-spin;
   }
 }

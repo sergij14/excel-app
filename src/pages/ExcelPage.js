@@ -1,28 +1,26 @@
 import { Excel } from "../components/Excel";
 import { Page } from "../core/Router/Page";
 import { Store } from "../core/Store/Store";
-import { debounce, storage } from "../core/utils";
 import { Header } from "../components/Header/Header";
 import { Formula } from "../components/Formula/Formula";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Table } from "../components/Table/Table";
-
-function getStorageName(id) {
-  return `excel:${id}`;
-}
+import { StateProcessor } from "../core/Storage/StateProcessor";
+import { LocalStorageClient } from "../core/Storage/LocalStorageClient";
 
 export class ExcelPage extends Page {
-  storeListener(data) {
-    storage(this.storageName, data);
-    console.log(`State Update:`, data);
+  constructor(...args) {
+    super(...args);
+
+    const timestamp = parseInt(this.params.list[0]) || new Date().getTime();
+
+    this.dateObj = new Date(timestamp);
+    this.processor = new StateProcessor(new LocalStorageClient(timestamp));
   }
 
-  getContainer() {
-    const timestamp = parseInt(this.params.list[0]) || new Date().getTime();
-    const dateObj = new Date(timestamp);
-    const date = `${dateObj.toLocaleDateString()}, ${dateObj.toLocaleTimeString()}`;
+  async getContainer() {
+    const date = `${this.dateObj.toLocaleDateString()}, ${this.dateObj.toLocaleTimeString()}`;
 
-    this.storageName = getStorageName(timestamp);
     const initialState = {
       toolbar: {},
       colState: {},
@@ -30,19 +28,19 @@ export class ExcelPage extends Page {
       dataState: {},
       dataStyles: {},
       currentText: "",
-      tableTitle: this.storageName,
+      tableTitle: "Table Name",
       date,
     };
 
-    this.store = new Store(storage(this.storageName) || initialState);
+    const state = await this.processor.get();
 
-    this.storeListener = debounce(this.storeListener, 300).bind(this);
-    this.storeUnsub = this.store.subscribe(this.storeListener);
-
+    this.store = new Store(state || initialState);
+    this.storeUnsub = this.store.subscribe(this.processor.listen);
     this.excel = new Excel({
       components: [Header, Toolbar, Formula, Table],
       store: this.store,
     });
+    console.log(this.excel);
 
     return this.excel.getContainer();
   }

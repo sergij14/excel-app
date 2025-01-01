@@ -22,6 +22,7 @@ export class Router {
     }
 
     this.$placeholder = $(selector);
+    this.$loader = $.create("div", "loader").html('<i class="fa-solid fa-spinner"></i>Loading...');
     this.routes = routes;
     this.page = null;
 
@@ -56,20 +57,20 @@ export class Router {
     return pageItem.element;
   }
 
-  pageChangeHandler() {
+  async pageChangeHandler() {
     if (this.page) {
       this.page.destroy();
     }
-
+    this.$placeholder.clear().append(this.$loader);
     const Page = this.getPage();
     if (!Page) {
       return activeRoute.navigate("/");
     }
 
     this.page = new Page(activeRoute.getParams());
+    const $container = await this.page.getContainer();
 
-    this.$placeholder.clear().append(this.page.getContainer());
-
+    this.$placeholder.clear().append($container);
     this.page.afterRender();
   }
 
